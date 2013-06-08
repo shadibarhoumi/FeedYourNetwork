@@ -1,16 +1,39 @@
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to FeedYourNetwork.";
+
+  Template.contacts.contact = function() {
+    return Contacts.find({}).fetch();
   };
 
-  Template.hello.events({
-    'click input' : function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
-    }
+  Template.contacts.events({
+   'click .submit': function(e) {
+      var name = $('.name').val();
+      var email = $('.email').val();
+      Contacts.insert({
+        name: name,
+        email: email
+      });
+    } 
   });
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
