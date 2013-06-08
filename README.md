@@ -39,9 +39,9 @@ To pull down the latest changes from the a branch to you local feature branch, y
 
 #Careful: don't merge master locally#
 
-<code><strike>git checkout master</strike></code>
-<code><strike>git merge your_branch</strike></code>
-<code><strike>git push</strike></code>
+<code><strike>BAD: git checkout master</strike></code>
+<code><strike>BAD: git merge your_branch</strike></code>
+<code><strike>BAD: git push</strike></code>
 
 Basically we don't want stuff committed to the master branch from a local repo. We want to use pull requests through git hub to commit production code. 
 
