@@ -2,7 +2,7 @@ if (Meteor.isClient) {
 
   // contacts
   Template.contacts.contact = function() {
-    return Contacts.find({}).fetch();
+    return Contacts.find({userId: Meteor.userId()}).fetch();
   };
 
   Template.contacts.events({
@@ -11,7 +11,8 @@ if (Meteor.isClient) {
       var email = $('.input-email').val();
       Contacts.insert({
         name: name,
-        email: email
+        email: email,
+        userId: Meteor.userId()
       });
     }, 
     'click .name, click .avatar': function(e) {
@@ -22,11 +23,13 @@ if (Meteor.isClient) {
       contact = Contacts.findOne(contactId);
       if (contact.flagged) {
         Notifications.insert({
-          message: "You have flagged " + contact.name
+          message: "You have flagged " + contact.name,
+          userId: Meteor.userId()
         });
       } else {
         Notifications.insert({
-          message: "You have unflagged " + contact.name
+          message: "You have unflagged " + contact.name,
+          userId: Meteor.userId()
         });
       }
     }
@@ -34,7 +37,7 @@ if (Meteor.isClient) {
 
   // notifications
   Template.notifications.notification = function() {
-    return Notifications.find({}).fetch();
+    return Notifications.find({userId: Meteor.userId()}).fetch();
   };
 
 }
