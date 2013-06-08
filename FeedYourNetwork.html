@@ -1,9 +1,14 @@
 <head>
   <title>FeedYourNetwork</title>
+  <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+  api_key: a67fqk3wedsg
+  authorize: true
+</script>
 </head>
 
 <body>
 	<div class="login" style="float: right">
+    <script type="in/Login"></script>
 		{{loginButtons align="right"}}
 	</div>
 	<div class="contacts" style="float: left">
@@ -18,6 +23,9 @@
 </body>
 
 <template name="contacts">
+  {{#if currentUser}}
+  <button class="loadContacts">Load Contacts</button>
+  {{/if}}
   <h3>Contacts</h3>
 
   <div class="add-contact">
