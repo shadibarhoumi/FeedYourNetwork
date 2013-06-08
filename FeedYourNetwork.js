@@ -41,12 +41,16 @@ if (Meteor.isClient) {
       IN.API.Connections("me")
       .result(function(data) {
         var list = data.values;
-        if (Contacts.findOne({userId:Meteor.userId()}) === undefined) {
-          Contacts.insert({userId:Meteor.userId(), linkedin:list});
-        }
-        else {
-          Meteor.call('updateLinkedin',list);
-        }
+        for (var i = 0; i < list.length; i++) {
+          var obj = list[i];
+          Contacts.insert({
+            userId:Meteor.userId(),
+            name: obj.firstName + ' ' + obj.lastName,
+            pictureUrl: obj.pictureUrl,
+            linkedin: obj,
+            flagged: false
+          });
+        };
       });
     } 
   });
