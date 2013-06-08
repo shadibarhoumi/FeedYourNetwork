@@ -37,8 +37,8 @@ To pull down the latest changes from the a branch to you local feature branch, y
 	git checkout your_branch 
 	git merge branch_with_desired_code
 
-<code>**Careful: NEVER RUNNNN THISSSSSSS!!!!!111!1!!111:**
-	
+#Careful: NEVER RUNNNN THISSSSSSS!!!!!111!1!!111:#
+<code>	
 	git checkout master
 	git merge your_branch
 	git push
