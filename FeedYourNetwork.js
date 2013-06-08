@@ -6,14 +6,18 @@ if (Meteor.isClient) {
 
   Template.contacts.events({
    'click .submit': function(e) {
-      var name = $('.name').val();
-      var email = $('.email').val();
+    var name = $('.name').val();
+    var email = $('.email').val();
+    if ($('.name').val() !== "" && $('.email').val() !== "") {
       Contacts.insert({
         name: name,
         email: email
       });
+    } else if ($('.name').val() === "" || $('.email').val() === "") {
+      console.log('incomplete input text!');
     } 
-  });
+  }
+});
 
 }
 
