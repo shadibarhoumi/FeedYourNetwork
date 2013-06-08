@@ -1,7 +1,7 @@
 if (Meteor.isClient) {
 
   // contacts
-  Template.contacts.contacts = function() {
+  Template.eachContact.contact = function() {
     return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}).fetch();
   };
 
