@@ -1,8 +1,10 @@
+# local branch creation #
+
 First, you must create your branch locally. Create a branch for every feature you work on.
 
 	git checkout -b your_branch
 
-To work
+# basic git workflow #
 
 	git add .
 
@@ -10,16 +12,24 @@ To work
 
 	git status
 
+# Initial push back up to github repo #
+
 After that, you can work locally in your branch, when you are ready to share the branch, push it. The next command push the branch to the remote repository origin and tracks it. 
 	git push -u origin your_branch
+
+# teammates can play too! #
 
 Teammates can reach your branch, by doing:
 	git pull
 	git checkout origin/your_branch
 
+# push existing branches (after initial commit) #
+
 You can continue working in the branch and pushing whenever you want without passing arguments to git push (argumentless git push will push the master to remote master, your_branch local to remote your_branch, etc...)
 
 	git push
+
+# 
 
 Teammates can push to your branch by doing commits and then push explicitly
 To pull down the latest changes from the a branch to you local feature branch, you must merge the branch with your local feature branch. 
@@ -28,9 +38,10 @@ To pull down the latest changes from the a branch to you local feature branch, y
 	git merge branch_with_desired_code
 
 NEVER RUNNNN THISSSSSSS!!!!!111!1!!111:
-git checkout master
-git merge your_branch
-git push
+	
+	git checkout master
+	git merge your_branch
+	git push
 Basically we don't want stuff committed to the master branch from a local repo. We want to use pull requests through git hub to commit production code. 
 
 To get stuff in the production code: 
