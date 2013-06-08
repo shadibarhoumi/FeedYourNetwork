@@ -6,22 +6,58 @@
 	<div class="login" style="float: right">
 		{{loginButtons align="right"}}
 	</div>
-	<div class="contacts">
+	<div class="contacts" style="float: left">
     {{> contacts}}
 	</div>
-	<div class="add-contacts">
+  <div class="notifications" style="float: left">
+    {{> notifications}}
+  </div>
+  <div class="">
 
-	</div>
+  </div>
 </body>
 
 <template name="contacts">
   <h3>Contacts</h3>
-  <h4>Add Contact:</h4>
-  <input class="name" type="text" placeholder="Name">
-  <input class="email" type="email" placeholder="Email">
-  <button class="submit">Add Contact</button>
-  <h4>All Contacts:</h4>
-  {{# each contact}}
-    <p>Name: <span class="contact-name">{{name}}</span> | Email: <span class="contact-email">{{email}}</span> | <label for="checkbox-{{_id}}">Follow</label><input id="checkbox-{{_id}}" type="checkbox"></p>
-  {{/each}}
+
+  <div class="add-contact">
+    <h4>Add Contact:</h4>
+    <input class="input-name" type="text" placeholder="Name">
+    <input class="input-email" type="email" placeholder="Email">
+    <button class="input-submit">Add Contact</button>
+  </div>
+
+  <ul class="list">
+    <h4>All Contacts:</h4>
+    
+    {{#each contact}}
+
+      <li id="{{_id}}" class="contact" style="border: 2px solid #aeee00;">
+        <div class="active-indicator">
+          <div class="outline"></div>
+          <a class="avatar" style="background-image: url('http://24.media.tumblr.com/avatar_f0205ddfd1ab_128.png'); height: 100px; width: 100px; display: block; text-indent: -9999em;">Avatar</a>
+        </div>
+          <a class="name">
+            <h2>{{name}}</h2>
+            <span>{{email}}</span>
+            <p>Flagged: {{flagged}}</p>
+          </a>
+          <div class="frequency"></div>
+      </li>
+
+    {{/each}}
+
+
+  </ul>
+
+</template>
+
+<template name="notifications">
+  <h3>Notifications</h3>
+  <ul>
+    {{#each notification}}
+      <li>{{message}}</li>
+    {{/each}}
+  </ul>
+
 </template>
