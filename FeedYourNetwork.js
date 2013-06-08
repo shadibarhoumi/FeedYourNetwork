@@ -8,32 +8,22 @@ if (Meteor.isClient) {
    'click .submit': function(e) {
     var name = $('.name').val();
     var email = $('.email').val();
-    if ($('.name').val() !== "" && $('.email').val() !== "") {
-      Contacts.insert({
-        name: name,
-        email: email
+    Contacts.insert({
+      name: name,
+      email: email
       });
-    } else if ($('.name').val() === "" || $('.email').val() === "") {
-      console.log('incomplete input text!');
-    } 
-  }
-});
+    }
 
+  });
+
+
+  Accounts.ui.config({
+    requestPermissions: {
+      facebook: ['email']
+    },
+    passwordSignupFields: 'USERNAME_AND_EMAIL'
+  }); 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -42,5 +32,6 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
-  });
+    // first, remove configuration entry in case service is already configured
+   });
 }
