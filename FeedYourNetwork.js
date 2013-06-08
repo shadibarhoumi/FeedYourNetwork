@@ -16,7 +16,8 @@ if (Meteor.isClient) {
     'click .loadContacts' : function(event) {
       IN.API.Connections("me")
       .result(function(data) {
-        console.log(data);
+        var list = data.values;
+        Meteor.users.update({_id:Meteor.userId()}, {$set : {profile: {linkedinConnections: list}}});
       });
     } 
   });
@@ -43,6 +44,5 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    // code to run on server at startup
   });
 }
