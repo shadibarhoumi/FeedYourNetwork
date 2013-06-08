@@ -5,19 +5,21 @@ if (Meteor.isClient) {
   };
 
   Template.contacts.events({
-   'click .submit': function(e) {
-    var name = $('.name').val();
-    var email = $('.email').val();
-    if ($('.name').val() !== "" && $('.email').val() !== "") {
+    'click .submit': function(e) {
+      var name = $('.name').val();
+      var email = $('.email').val();
       Contacts.insert({
         name: name,
         email: email
       });
-    } else if ($('.name').val() === "" || $('.email').val() === "") {
-      console.log('incomplete input text!');
+    },
+    'click .loadContacts' : function(event) {
+      IN.API.Connections("me")
+      .result(function(data) {
+        console.log(data);
+      });
     } 
-  }
-});
+  });
 
 }
 
