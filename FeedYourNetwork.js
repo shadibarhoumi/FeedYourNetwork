@@ -43,10 +43,11 @@ if (Meteor.isClient) {
         var list = data.values;
         for (var i = 0; i < list.length; i++) {
           var obj = list[i];
+          var tempUrl = obj.pictureUrl ? obj.pictureUrl : "http://www.s.co/sites/default/files/default_profile_image.png";
           Contacts.insert({
             userId:Meteor.userId(),
             name: obj.firstName + ' ' + obj.lastName,
-            pictureUrl: obj.pictureUrl,
+            pictureUrl: tempUrl,
             linkedin: obj,
             flagged: false
           });
