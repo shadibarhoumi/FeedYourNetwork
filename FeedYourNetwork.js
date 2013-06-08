@@ -1,8 +1,8 @@
 if (Meteor.isClient) {
 
   // contacts
-  Template.contacts.contact = function() {
-    return Contacts.find({}).fetch();
+  Template.contacts.contacts = function() {
+    return Contacts.find({userId:Meteor.userId()},{fields: {'linkedinConnections':1}}).linkedinConnections;
   };
 
   Template.contacts.events({
@@ -34,7 +34,12 @@ if (Meteor.isClient) {
       IN.API.Connections("me")
       .result(function(data) {
         var list = data.values;
-        Meteor.users.update({_id:Meteor.userId()}, {$set : {profile: {linkedinConnections: list}}});
+        if (Contacts.findOne({userId:Meteor.userId()}) === undefined) {
+          Contacts.insert({userId:Meteor.userId(), linkedin:list});
+        }
+        else {
+          Meteor.call('updateLinkedin',list);
+        }
       });
     } 
   });
@@ -66,5 +71,24 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
 
+    Meteor.methods({
+      'updateLinkedin' : function(updatedLinkedinList) {
+        Contacts.update({userId:this.userId}, {$set: {linkedin:updatedLinkedinList}});
+      }
+    });
+
+    Contacts.allow({
+      insert: function(userId, doc) {
+        debugger;
+        console.log(userId);
+        console.log(doc.userId);
+        return userId === doc.userId;
+      },
+      update: function(userId, doc) {
+                console.log(userId);
+        console.log(doc.userId);
+        return userId === doc.userId;
+      }
+    });
   });
 }

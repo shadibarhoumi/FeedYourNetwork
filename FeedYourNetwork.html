@@ -37,12 +37,12 @@
   <ul class="list">
     <h4>All Contacts:</h4>
     
-    {{#each contact}}
+    {{#each contacts}}
 
       <li id="{{_id}}" class="contact" style="border: 2px solid #aeee00;">
         <div class="active-indicator">
           <div class="outline"></div>
-          <a class="avatar" style="background-image: url('http://24.media.tumblr.com/avatar_f0205ddfd1ab_128.png'); height: 100px; width: 100px; display: block; text-indent: -9999em;">Avatar</a>
+          <a class="avatar" style="background-image: url('{{pictureUrl}}'); height: 100px; width: 100px; display: block; text-indent: -9999em;">Avatar</a>
         </div>
           <a class="name">
             <h2>{{name}}</h2>
