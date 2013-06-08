@@ -50,7 +50,7 @@ if (Meteor.isClient) {
             linkedin: obj,
             flagged: false
           });
-        };
+        }
       });
     } 
   });
@@ -59,42 +59,4 @@ if (Meteor.isClient) {
   Template.notifications.notification = function() {
     return Notifications.find({userId: Meteor.userId()}).fetch();
   };
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-
-    Meteor.methods({
-      'updateLinkedin' : function(updatedLinkedinList) {
-        Contacts.update({userId:this.userId}, {$set: {linkedin:updatedLinkedinList}});
-      }
-    });
-
-    Contacts.allow({
-      insert: function(userId, doc) {
-        return userId === doc.userId;
-      },
-      update: function(userId, doc) {
-        return userId === doc.userId;
-      }
-    });
-  });
 }
