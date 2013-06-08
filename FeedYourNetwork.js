@@ -1,7 +1,7 @@
 if (Meteor.isClient) {
 
   // contacts
-  Template.eachContact.contact = function() {
+  Template.contacts.contacts = function() {
     return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}).fetch();
   };
 
@@ -36,14 +36,29 @@ if (Meteor.isClient) {
           userId: Meteor.userId()
         });
       }
-    }
+    },
+    'click .loadContacts' : function(event) {
+      IN.API.Connections("me")
+      .result(function(data) {
+        var list = data.values;
+        for (var i = 0; i < list.length; i++) {
+          var obj = list[i];
+          Contacts.insert({
+            userId:Meteor.userId(),
+            name: obj.firstName + ' ' + obj.lastName,
+            pictureUrl: obj.pictureUrl,
+            linkedin: obj,
+            flagged: false
+          });
+        };
+      });
+    } 
   });
 
   // notifications
   Template.notifications.notification = function() {
     return Notifications.find({userId: Meteor.userId()}).fetch();
   };
-
 }
 
 
@@ -67,6 +82,19 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
 
-    // code to run on server at startup
+    Meteor.methods({
+      'updateLinkedin' : function(updatedLinkedinList) {
+        Contacts.update({userId:this.userId}, {$set: {linkedin:updatedLinkedinList}});
+      }
+    });
+
+    Contacts.allow({
+      insert: function(userId, doc) {
+        return userId === doc.userId;
+      },
+      update: function(userId, doc) {
+        return userId === doc.userId;
+      }
+    });
   });
 }
