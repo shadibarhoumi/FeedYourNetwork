@@ -32,7 +32,6 @@ if (Meteor.isClient) {
     }
   });
 
-
   // notifications
   Template.notifications.notification = function() {
     return Notifications.find({}).fetch();
