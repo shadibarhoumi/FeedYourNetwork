@@ -86,14 +86,9 @@ if (Meteor.isServer) {
 
     Contacts.allow({
       insert: function(userId, doc) {
-        debugger;
-        console.log(userId);
-        console.log(doc.userId);
         return userId === doc.userId;
       },
       update: function(userId, doc) {
-                console.log(userId);
-        console.log(doc.userId);
         return userId === doc.userId;
       }
     });
