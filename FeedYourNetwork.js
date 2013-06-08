@@ -2,18 +2,23 @@ if (Meteor.isClient) {
 
   // contacts
   Template.contacts.contacts = function() {
-    return Contacts.find({userId:Meteor.userId()},{fields: {'linkedinConnections':1}}).linkedinConnections;
+    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}).fetch();
   };
 
   Template.contacts.events({
-   'click .input-submit': function(e) {
-      var name = $('.input-name').val();
-      var email = $('.input-email').val();
+   'click .add-contact .submit': function(e) {
+      var name = $('.add-contact .name').val();
+      var email = $('.add-contact .email').val();
       Contacts.insert({
         name: name,
-        email: email
+        email: email,
+        userId: Meteor.userId()
       });
-    }, 
+    },
+    'keyup .search-contact .search': function(e) {
+      var query = $('.search-contact .search').val();
+      Session.set('query', query);
+    },
     'click .name, click .avatar': function(e) {
       var contactId = $(e.target).closest('li').attr('id');
       var contact = Contacts.findOne(contactId);
@@ -22,11 +27,13 @@ if (Meteor.isClient) {
       contact = Contacts.findOne(contactId);
       if (contact.flagged) {
         Notifications.insert({
-          message: "You have flagged " + contact.name
+          message: "You have flagged " + contact.name,
+          userId: Meteor.userId()
         });
       } else {
         Notifications.insert({
-          message: "You have unflagged " + contact.name
+          message: "You have unflagged " + contact.name,
+          userId: Meteor.userId()
         });
       }
     },
@@ -46,7 +53,7 @@ if (Meteor.isClient) {
 
   // notifications
   Template.notifications.notification = function() {
-    return Notifications.find({}).fetch();
+    return Notifications.find({userId: Meteor.userId()}).fetch();
   };
 }
 
