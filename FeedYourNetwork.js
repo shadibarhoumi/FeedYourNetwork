@@ -1,20 +1,24 @@
 if (Meteor.isClient) {
 
   // contacts
-  Template.contacts.contact = function() {
-    return Contacts.find({userId: Meteor.userId()}).fetch();
+  Template.eachContact.contact = function() {
+    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}).fetch();
   };
 
   Template.contacts.events({
-   'click .input-submit': function(e) {
-      var name = $('.input-name').val();
-      var email = $('.input-email').val();
+   'click .add-contact .submit': function(e) {
+      var name = $('.add-contact .name').val();
+      var email = $('.add-contact .email').val();
       Contacts.insert({
         name: name,
         email: email,
         userId: Meteor.userId()
       });
-    }, 
+    },
+    'keyup .search-contact .search': function(e) {
+      var query = $('.search-contact .search').val();
+      Session.set('query', query);
+    },
     'click .name, click .avatar': function(e) {
       var contactId = $(e.target).closest('li').attr('id');
       var contact = Contacts.findOne(contactId);
