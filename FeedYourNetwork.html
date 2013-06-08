@@ -3,11 +3,25 @@
 </head>
 
 <body>
-  {{> hello}}
+	<div class="login" style="float: right">
+		{{loginButtons align="right"}}
+	</div>
+	<div class="contacts">
+    {{> contacts}}
+	</div>
+	<div class="add-contacts">
+
+	</div>
 </body>
 
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+<template name="contacts">
+  <h3>Contacts</h3>
+  <h4>Add Contact:</h4>
+  <input class="name" type="text" placeholder="Name">
+  <input class="email" type="email" placeholder="Email">
+  <button class="submit">Add Contact</button>
+  <h4>All Contacts:</h4>
+  {{# each contact}}
+    <p>Name: <span class="contact-name">{{name}}</span> | Email: <span class="contact-email">{{email}}</span> | <label for="checkbox-{{_id}}">Follow</label><input id="checkbox-{{_id}}" type="checkbox"></p>
+  {{/each}}
 </template>
