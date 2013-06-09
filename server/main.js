@@ -15,4 +15,13 @@ Meteor.startup(function () {
       return userId === doc.userId;
     }
   });
+
+  Notifications.allow({
+    insert: function() {
+      return true;
+    },
+    remove: function() {
+      return true;
+    }
+  });
 });
