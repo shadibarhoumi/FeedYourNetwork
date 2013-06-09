@@ -59,7 +59,8 @@
         </a>
         <div class="info">
           <span>{{email}}</span>
-          {{>linkedinStream}} 
+          {{>linkedinStream}}
+          
           {{#if flagged}}
             {{#if interval}}
               <p>Contact in {{nextContactString nextContact}}</p>
@@ -78,6 +79,7 @@
 </template>
 
 <template name="notifications">
+ 
   <h3>Upcoming Contacts</h3>
     <li>
       {{#each upcoming}}
