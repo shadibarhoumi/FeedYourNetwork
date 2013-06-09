@@ -30,7 +30,6 @@ Template.eachContact.events({
     Contacts.update(contactId, {$set: {interval: interval, nextContact: nextContact}});
 
     var contact = Contacts.findOne(contactId);
-    console.log(contact);
     if (contact.linkedin) {
         Notifications.insert({
           userId: Meteor.userId(),
