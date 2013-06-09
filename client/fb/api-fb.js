@@ -26,6 +26,23 @@ $.getScript('http://connect.facebook.net/en_US/all.js', function()
     },
     getFriendProfilePics: function(profileId) {
       return "http://graph.facebook.com/"+ profileId +"/picture";
+    },
+    getFriendStatus: function(profileId) {
+      FB.api('/' + profileId + '?fields=statuses.limit(1)', function(response) {
+        console.log(response.statuses.data[0].message);
+
+      });
+    },
+    getTimeStampOfStatus: function(profileId) {
+      FB.api('/' + profileId + '?fields=statuses.limit(1)', function(response) {
+        console.log(response.statuses.data[0].updated_time);
+      });
+    },
+    getFriendLocation: function(profileId) {
+      FB.api('/' + profileId + '?fields=location', function(response) {
+        console.log(response.location.name);
+
+      });
     }
 	};
 });

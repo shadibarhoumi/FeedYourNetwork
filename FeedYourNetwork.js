@@ -59,8 +59,6 @@ if (Meteor.isClient) {
     var callback = function(fbFriendsList) {
       for (var i = 0; i < fbFriendsList.length; i++) {
         var obj = fbFriendsList[i];
-        
-        //var profilePicUrl = obj.pictureUrl ? obj.pictureUrl : "http://www.s.co/sites/default/files/default_profile_image.png";
         Contacts.insert({
           userId: Meteor.userId(),
           name: obj.name,
@@ -72,7 +70,6 @@ if (Meteor.isClient) {
     };
     //pass the asynconous block
     fbApi.getFriendsList(callback);
-
 
     IN.API.Connections("me")
       .result(function(data) {
@@ -91,11 +88,6 @@ if (Meteor.isClient) {
       });
   }
   });
-
-  // notifications
-  Template.notifications.notification = function() {
-    return Notifications.find({userId: Meteor.userId()}).fetch();
-  };
 
 
   Accounts.ui.config({
