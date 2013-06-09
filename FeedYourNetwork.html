@@ -25,7 +25,7 @@
 
 <template name="contacts">
   {{#if currentUser}}
-  <button class="loadContacts">Load LinkedIn Contacts</button>
+  <button class="loadContacts">Load LinkedIn and Facebook Contacts</button>
   {{/if}}
   <h3>Contacts</h3>
 
@@ -62,10 +62,10 @@
         <div class="info">
           <span>{{email}}</span>
           {{#if flagged}}
-            {{#if frequency}}
-              <p>Contact in {{frequency}}</p>
+            {{#if interval}}
+              <p>Contact in {{nextContactString nextContact}}</p>
             {{else}}
-              <p>Contact every <input class="frequency" type="text"><button class="submit-frequency">Set</button></p>
+              <p>Contact every <input class="interval" type="text"><button class="submit-interval">Set</button></p>
             {{/if}}
           {{/if}}
         </div>
@@ -74,6 +74,18 @@
   {{/each}}
 </template>
 
+<template name="notifications">
+  <h3>Upcoming Contacts</h3>
+    <li>
+      {{#each upcoming}}
+        <p>Upcoming: Contact {{name}} in {{nextContactString nextContact}}</p>
+      {{/each}}
+    </li>
+  <h3>Future Contacts</h3>
+    {{#each future}}
+      <p>Contact {{names}} in {{nextContactString nextContact}}</p>
+    {{/each}}
+</template>
 
 
 
