@@ -4,6 +4,7 @@
   api_key: a67fqk3wedsg
   authorize: true
 </script>
+<script type="text/javascript" src="lib/sugar-1.3.9.min.js"></script>
 </head>
 
 <body>
@@ -24,7 +25,7 @@
 
 <template name="contacts">
   {{#if currentUser}}
-  <button class="loadContacts">Load Contacts</button>
+  <button class="loadContacts">Load LinkedIn Contacts</button>
   {{/if}}
   <h3>Contacts</h3>
 
@@ -57,10 +58,17 @@
       </div>
         <a class="name">
           <h2>{{name}}</h2>
-          <span>{{email}}</span>
-          <p>Flagged: {{flagged}}</p>
         </a>
-        <div class="frequency"></div>
+        <div class="info">
+          <span>{{email}}</span>
+          {{#if flagged}}
+            {{#if frequency}}
+              <p>Contact in {{frequency}}</p>
+            {{else}}
+              <p>Contact every <input class="frequency" type="text"><button class="submit-frequency">Set</button></p>
+            {{/if}}
+          {{/if}}
+        </div>
     </li>
 
   {{/each}}

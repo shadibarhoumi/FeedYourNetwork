@@ -1,9 +1,22 @@
+/////////////////////////////////////////////////////// CLIENT /////////////////////////////////////////////////////
+
 if (Meteor.isClient) {
 
-  // contacts
+  // CONTACTS
   Template.eachContact.contact = function() {
     return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}).fetch();
   };
+
+  Template.eachContact.events({
+    'click .submit-frequency': function(e) {
+      var contactId = $(e.target).closest('li').attr('id');
+      var frequency = $(e.target).prev('.frequency').val();
+      // turn frequency into a date
+      
+      Contacts.update(contactId, {$set: {frequency: frequency}});
+
+    }
+  });
 
   Template.contacts.events({
    'click .add-contact .submit': function(e) {
@@ -37,6 +50,8 @@ if (Meteor.isClient) {
         });
       }
     },
+
+    // load linkedin contacts
     'click .loadContacts' : function(event) {
       IN.API.Connections("me")
       .result(function(data) {
@@ -65,20 +80,7 @@ if (Meteor.isClient) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//////////////////////////////////////////////////////// SERVER ////////////////////////////////////////////////////////
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
