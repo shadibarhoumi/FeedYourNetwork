@@ -20,7 +20,7 @@ Template.linkedinStream.events({
             var type = obj.updateType;
             var content = obj.updateContent.person;
             var url = content.siteStandardProfileRequest.url;
-            var timestamp = content.timestamp;
+            var timestamp = obj.timestamp;
             //note: docs refer to "PRFU", but response only has "PROF"
             if (type === 'PROF') {
               var nextString = handleProfileUpdate(content, obj.updatedFields.values);
@@ -44,7 +44,7 @@ Template.linkedinStream.events({
                 string += "'s status: " + comment; 
               }
             }
-            updates.push({update:string, time:timestamp});
+            updates.push({update:string, time:timestamp, relative: new Date(timestamp).relative()});
           } //end for
           console.log(updates);
         } //end if
