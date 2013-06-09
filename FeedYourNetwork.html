@@ -28,12 +28,8 @@
 
 		<a href="#" class="logo">Feed Your Network</a>
 		
-		<ul class="nav">
-			<li><a href="#">Add a New Contact</a></li>
-			<li><a href="#">FAQ</a></li>
-			<li><a href="#">Contact</a></li>
-			<li><a href="#">Logout</a></li>
-		</ul>
+		{{> login}}
+		
 	</div>
 	
 	<div class="mobile">
@@ -45,8 +41,7 @@
 	</div>
 
 </header>
-
-  {{> login}}	
+	
   {{> contacts}}
   
   <div class="pane" id="contact">
@@ -93,13 +88,25 @@
 </body>
 
 <template name="login">
-  <div class="login" style="float: right">
-    <script type="in/Login" data-onAuth="onLinkedInAuth"></script>
-    {{loginButtons align="right"}}
-    {{#if currentUser}}
-      <button class="loadContacts">Load LinkedIn and Facebook Contacts</button>
+
+	{{#if currentUser}}
+    <ul class="nav">
+      	<li><button style="margin: 15px 10px 0 0;" class="loadContacts">Load</button></li>
+		<li><a href="#">FAQ</a></li>
+		<li><a href="#">Contact</a></li>
+		<li><a href="#">Logout</a></li>
+	</ul>
+    {{else}}
+    
+    <ul class="nav">
+		<li><script type="in/Login" data-onAuth="onLinkedInAuth"></script>
+    {{loginButtons align="right"}}</li>
+	</ul>
+    	
     {{/if}}
-  </div>
+    
+		
+
 </template>
 
 <template name="contacts">
@@ -134,17 +141,6 @@
 
 <template name="eachContact">
     <li id="{{_id}}" class="contact">
-    
-    	<div class="info">
-          <span></span>
-          {{#if flagged}}
-            {{#if interval}}
-              <p>Contact in {{nextContactString nextContact}}</p>
-            {{else}}
-              <p>Contact every <input class="interval" type="text"><button class="submit-interval">Set</button></p>
-            {{/if}}
-          {{/if}}
-        </div>
         
     	<div class="frequency">
 				<div class="count">
@@ -155,6 +151,11 @@
 						<li data-frequency-slug="1<span>/</span>M">Once a Month</li>
 						<li data-frequency-slug="2<span>/</span>Y">Every 6 Months</li>
 						<li data-frequency-slug="1<span>/</span>Y">Every Year</li>
+						{{#if interval}}
+			              <p>Contact in {{nextContactString nextContact}}</p>
+			            {{else}}
+			              <p>Contact every <input class="interval" type="text"><button class="submit-interval">Set</button></p>
+			            {{/if}}
 					</ul>
 				</div>
 			</div>
