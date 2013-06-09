@@ -14,6 +14,7 @@ if (Meteor.isClient) {
     'click .loadContacts' : function(event) {
       //define call back to be run once facebook is ready
       var callback = function(fbFriendsList) {
+        // debugger;
         for (var i = 0; i < fbFriendsList.length; i++) {
           var obj = fbFriendsList[i];
           Contacts.insert({
@@ -70,7 +71,7 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.eachContact.contact = function() {
+  Template.contacts.contacts = function() {
     return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"]});
   };
 

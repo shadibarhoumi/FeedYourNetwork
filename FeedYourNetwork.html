@@ -59,7 +59,7 @@
         </a>
         <div class="info">
           <span>{{email}}</span>
-          {{>linkedinStream}}
+          {{>linkedinStream}} 
           {{#if flagged}}
             {{#if interval}}
               <p>Contact in {{nextContactString nextContact}}</p>
@@ -75,6 +75,9 @@
   {{#if linkedin}}
     <button class="linkedinStream">Get linkedin updates</button>
   {{/if}}
+</template>
+
+<template name="notifications">
   <h3>Upcoming Contacts</h3>
     <li>
       {{#each upcoming}}
