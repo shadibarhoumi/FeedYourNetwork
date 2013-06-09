@@ -17,13 +17,12 @@ $.getScript('http://connect.facebook.net/en_US/all.js', function()
 
   window.fbApi = {
 		friendsList: [],
-    getFriendsList: function() {
-
-
+    getFriendsList: function(callback) {
       FB.api('/me/friends', function(response) {
+        //these are run once facebook says its ready
         this.fbApi.friendsList = response.data;
+        callback(response.data);
       });
-      return this.friendsList;
-    },
+    }
 	};
 });
