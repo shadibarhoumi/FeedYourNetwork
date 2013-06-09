@@ -47,6 +47,9 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.contactList.contacts = function() {
+    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"]});
+  };
 
   // CONTACTS
   Template.contacts.events({
@@ -70,10 +73,6 @@ if (Meteor.isClient) {
       Contacts.update(contactId, {$set: {flagged: flag}});
     }
   });
-
-  Template.contacts.contacts = function() {
-    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"]});
-  };
 
   Template.eachContact.events({
     'click .submit-interval': function(e) {

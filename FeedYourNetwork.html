@@ -33,18 +33,23 @@
     <button class="submit">Add Contact</button>
   </div>
 
-  <div class="search-contact">
-    <h4>Search Contact:</h4>
-    <input class="search" type="text" placeholder="Enter Contact Name">
-  </div>
+    <div class="search-contact">
+      <h4>Search Contact:</h4>
+      <input class="search" type="text" placeholder="Enter Contact Name">
+    </div>
 
+    {{>contactList}}
+
+  </div>
+</template>
+
+<template name="contactList">
   <ul class="list">
     <h4>All Contacts:</h4>
     {{#each contacts}}
       {{> eachContact}} 
     {{/each}}   
   </ul>
-  </div>
 </template>
 
 
