@@ -1,19 +1,33 @@
 /////////////////////////////////////////////////////// CLIENT /////////////////////////////////////////////////////
 
 if (Meteor.isClient) {
-
   // CONTACTS
   Template.eachContact.contact = function() {
-    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}).fetch();
+
+    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"]}).fetch();
   };
 
   Template.eachContact.events({
-    'click .submit-frequency': function(e) {
+    'click .submit-interval': function(e) {
       var contactId = $(e.target).closest('li').attr('id');
-      var frequency = $(e.target).prev('.frequency').val();
-      // turn frequency into a date
-      
-      Contacts.update(contactId, {$set: {frequency: frequency}});
+      // turn interval into future date: append 'later' to get a date x days/weeks in the future
+      var intervalText = $(e.target).prev('.interval').val();
+      // interval is a number of milliseconds
+      var interval = Date.create(intervalText + ' later').getTime() - Date.create('now').getTime();
+      // nextContact is next date you should talk to contact
+      var nextContact = Date.create(Date.create('now').getTime() + interval).getTime();
+
+      Contacts.update(contactId, {$set: {interval: interval, nextContact: nextContact}});
+
+      var contact = Contacts.findOne(contactId);
+
+      Notifications.insert({
+          userId: Meteor.userId(),
+          name: contact.name,
+          nextContact: contact.nextContact,
+          nextContactString: Date.create(nextContact).relative().replace(' from now', ''),
+          message: "Talk to " + contact.name + " in " + Date.create(contact.nextContact).relative().replace(' from now', '')
+        });
 
     }
   });
@@ -41,17 +55,7 @@ if (Meteor.isClient) {
     var flag = contact.flagged ? false : true;
     Contacts.update(contactId, {$set: {flagged: flag}});
     contact = Contacts.findOne(contactId);
-    if (contact.flagged) {
-      Notifications.insert({
-        message: "You have flagged " + contact.name,
-        userId: Meteor.userId()
-      });
-    } else {
-      Notifications.insert({
-        message: "You have unflagged " + contact.name,
-        userId: Meteor.userId()
-      });
-    }
+
   },
   
   'click .loadContacts' : function(event) {
@@ -67,9 +71,8 @@ if (Meteor.isClient) {
         });
       }
     };
-    //pass the asynconous block
+    //pass the asynchronous block
     fbApi.getFriendsList(callback);
-
 
     IN.API.Connections("me")
       .result(function(data) {
@@ -86,12 +89,78 @@ if (Meteor.isClient) {
           });
         }
       });
-  }
+
+    },
+
+
+    'keyup .search-contact .search': function(e) {
+      var query = $('.search-contact .search').val();
+      Session.set('query', query);
+    },
+
+    'click .name, click .avatar': function(e) {
+      var contactId = $(e.target).closest('li').attr('id');
+      var contact = Contacts.findOne(contactId);
+      var flag = contact.flagged ? false : true;
+      Contacts.update(contactId, {$set: {flagged: flag}});
+    }
+
   });
 
   // notifications
-  Template.notifications.notification = function() {
-    return Notifications.find({userId: Meteor.userId()}).fetch();
+  Template.notifications.upcoming = function() {
+    var notifications =  Notifications.find({userId: Meteor.userId()}, {sort: ["nextContact", "asc"]}).fetch();
+    var groups = []
+    var currentTimeString = null;
+
+    for (var i = 0; i < notifications.length; i++) {
+      if (currentTimeString !== notifications[i].nextContactString) {
+        var group = [notifications[i]];
+        groups.push(group);
+        currentTimeString = notifications[i].nextContactString;
+      } else {
+        group.push(notifications[i]);
+      }
+    }
+
+    return groups[0];
+  };
+
+  Template.notifications.future = function() {
+    var notifications =  Notifications.find({userId: Meteor.userId()}, {sort: ["nextContact", "asc"]}).fetch();
+    var groups = []
+    var currentTimeString = null;
+
+    for (var i = 0; i < notifications.length; i++) {
+      if (currentTimeString !== notifications[i].nextContactString) {
+        var group = [notifications[i]];
+        groups.push(group);
+        currentTimeString = notifications[i].nextContactString;
+      } else {
+        group.push(notifications[i]);
+      }
+    }
+
+    var squished = [];
+
+    for (var i = 1; i < groups.length; i++) {
+      var names = "";
+      var nextContact = groups[i][0].nextContact;
+      for (var j = 0; j < groups[i].length; j++) {
+        var prefix = "";
+        if (j > 0 && j == groups[i].length-1) {
+          prefix = (groups[i].length == 2) ? " and " : ", and ";
+        } else if (j > 0) {
+          prefix = ", "
+        }
+        names += prefix + groups[i][j].name;
+      }
+        squished.push({names: names, nextContact: nextContact});
+    }
+
+    return squished;
+
+
   };
 
 
@@ -104,3 +173,29 @@ if (Meteor.isClient) {
 }
 
 
+
+//////////////////////////////////////////////////////// SERVER ////////////////////////////////////////////////////////
+
+if (Meteor.isServer) {
+  Meteor.startup(function () {
+
+    Contacts.allow({
+      insert: function(userId, doc) {
+        return userId === doc.userId;
+      },
+      update: function(userId, doc) {
+        return userId === doc.userId;
+      }
+    });
+
+    Notifications.allow({
+      insert: function() {
+        return true;
+      },
+      remove: function() {
+        return true;
+      }
+    });
+
+  });
+}
