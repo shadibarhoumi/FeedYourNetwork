@@ -1,9 +1,78 @@
 /////////////////////////////////////////////////////// CLIENT /////////////////////////////////////////////////////
 
 if (Meteor.isClient) {
+
+  window.onLinkedInAuth = function() {
+    Session.set('linkedinAuth', true);
+  };
+
+  Template.login.isLinkedinAuth = function() {
+    return Session.get('linkedinAuth');
+  };
+
+  Template.login.events({
+    'click .loadContacts' : function(event) {
+      //define call back to be run once facebook is ready
+      var callback = function(fbFriendsList) {
+        // debugger;
+        for (var i = 0; i < fbFriendsList.length; i++) {
+          var obj = fbFriendsList[i];
+          Contacts.insert({
+            userId: Meteor.userId(),
+            name: obj.name,
+            pictureUrl: fbApi.getFriendProfilePics(obj.id),
+            facebook: obj,
+            flagged: false
+          });
+        }
+      };
+      //pass the asynconous block
+      fbApi.getFriendsList(callback);
+
+      IN.API.Connections("me")
+        .result(function(data) {
+          var list = data.values;
+          for (var i = 0; i < list.length; i++) {
+            var obj = list[i];
+            var tempUrl = obj.pictureUrl ? obj.pictureUrl : "http://www.s.co/sites/default/files/default_profile_image.png";
+            Contacts.insert({
+              userId:Meteor.userId(),
+              name: obj.firstName + ' ' + obj.lastName,
+              pictureUrl: tempUrl,
+              linkedin: obj,
+              flagged: false
+            });
+          }
+        });
+    }
+  });
+
+
   // CONTACTS
-  Template.eachContact.contact = function() {
-    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"]}).fetch();
+  Template.contacts.events({
+   'click .add-contact .submit': function(e) {
+      var name = $('.add-contact .name').val();
+      var email = $('.add-contact .email').val();
+      Contacts.insert({
+        name: name,
+        email: email,
+        userId: Meteor.userId()
+      });
+    },
+    'keyup .search-contact .search': function(e) {
+      var query = $('.search-contact .search').val();
+      Session.set('query', query);
+    },
+    'click .name, click .avatar': function(e) {
+      var contactId = $(e.target).closest('li').attr('id');
+      var contact = Contacts.findOne(contactId);
+      var flag = contact.flagged ? false : true;
+      Contacts.update(contactId, {$set: {flagged: flag}});
+    }
+  });
+
+  Template.contacts.contacts = function() {
+    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"]});
   };
 
   Template.eachContact.events({
@@ -27,85 +96,9 @@ if (Meteor.isClient) {
           nextContactString: Date.create(nextContact).relative().replace(' from now', ''),
           message: "Talk to " + contact.name + " in " + Date.create(contact.nextContact).relative().replace(' from now', '')
         });
-
     }
   });
 
-  Template.contacts.events({
-
-   'click .add-contact .submit': function(e) {
-    var name = $('.add-contact .name').val();
-    var email = $('.add-contact .email').val();
-    Contacts.insert({
-      name: name,
-      email: email,
-      userId: Meteor.userId()
-    });
-  },
-  
-  'keyup .search-contact .search': function(e) {
-    var query = $('.search-contact .search').val();
-    Session.set('query', query);
-  },
-  
-  'click .name, click .avatar': function(e) {
-    var contactId = $(e.target).closest('li').attr('id');
-    var contact = Contacts.findOne(contactId);
-    var flag = contact.flagged ? false : true;
-    Contacts.update(contactId, {$set: {flagged: flag}});
-    contact = Contacts.findOne(contactId);
-
-  },
-  
-  'click .loadContacts' : function(event) {
-    //define call back to be run once facebook is ready
-    var callback = function(fbFriendsList) {
-      for (var i = 0; i < fbFriendsList.length; i++) {
-        var obj = fbFriendsList[i];
-        Contacts.insert({
-          userId: Meteor.userId(),
-          name: obj.name,
-          pictureUrl: fbApi.getFriendProfilePics(obj.id),
-          facebook: obj,
-          flagged: false
-        });
-      }
-    };
-    //pass the asynchronous block
-    fbApi.getFriendsList(callback);
-
-    IN.API.Connections("me")
-      .result(function(data) {
-        var list = data.values;
-        for (var i = 0; i < list.length; i++) {
-          var obj = list[i];
-          var tempUrl = obj.pictureUrl ? obj.pictureUrl : "http://www.s.co/sites/default/files/default_profile_image.png";
-          Contacts.insert({
-            userId:Meteor.userId(),
-            name: obj.firstName + ' ' + obj.lastName,
-            pictureUrl: tempUrl,
-            linkedin: obj,
-            flagged: false
-          });
-        }
-      });
-
-    },
-
-
-    'keyup .search-contact .search': function(e) {
-      var query = $('.search-contact .search').val();
-      Session.set('query', query);
-    },
-
-    'click .name, click .avatar': function(e) {
-      var contactId = $(e.target).closest('li').attr('id');
-      var contact = Contacts.findOne(contactId);
-      var flag = contact.flagged ? false : true;
-      Contacts.update(contactId, {$set: {flagged: flag}});
-    }
-
-  });
   // notifications
   Template.notifications.upcoming = function() {
     var notifications =  Notifications.find({userId: Meteor.userId()}, {sort: ["nextContact", "asc"]}).fetch();
@@ -168,31 +161,5 @@ if (Meteor.isClient) {
     },
     passwordSignupFields: 'USERNAME_AND_EMAIL'
   }); 
-}
 
-
-
-//////////////////////////////////////////////////////// SERVER ////////////////////////////////////////////////////////
-
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    Contacts.allow({
-      insert: function(userId, doc) {
-        return userId === doc.userId;
-      },
-      update: function(userId, doc) {
-        return userId === doc.userId;
-      }
-    });
-
-    Notifications.allow({
-      insert: function() {
-        return true;
-      },
-      remove: function() {
-        return true;
-      }
-    });
-
-  });
 }
