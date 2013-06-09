@@ -1,0 +1,231 @@
+@media only screen and (max-width: 640px) {
+
+	.clearfix {
+	    zoom: 1;
+	    &:before, &:after {
+	        content: "";
+	        display: table;
+	    }
+	    &:after {
+	        clear: both;
+	    }
+	}
+	
+	@color: #309ed1;
+	
+	.border-radius(@px: 4px){
+		border-radius: @px;
+	}
+	
+	.desktop{
+	display: none;
+	}
+	
+	header{
+		position: fixed;
+		width: 100%;
+		top: 0;
+		height: 44px;
+		z-index: 999;
+		box-shadow: 0 2px 0 rgba(0,0,0,.2);
+		.menu-handle{
+			height: 36px;
+			width: 36px;
+			background: darken(@color, 20%);
+			color: #fff;
+			margin: 4px;
+			position: relative;
+			z-index: 2;
+			.icon{
+				line-height: 36px;
+				text-align: center;
+			}
+		}
+		.logo{
+			position: absolute;
+			width: 100%;
+			text-align: center;
+			top: 0;
+			.icon{
+				background: url('../images/fyn-mobile.png');
+				background-size: 100%;
+				width: 320px;
+				height: 44px;
+				margin: 0 auto;
+			}
+		}
+	}
+	
+	#contacts{
+		width: 80%;
+		position: absolute;
+	}
+	
+	.pane{
+		position: absolute;
+		z-index: 400;
+		background: #eee;
+		width: 94%!important;
+		padding: 54px 3% 12px;
+	}
+	
+	#contacts #search #search-field{
+		height: 32px;
+	}
+	#notifications{
+		
+		.feature{
+			margin: 0 0 10px 0;
+			h1{
+				font-size: 24px;
+			}
+		}
+		.avatar{
+			position: relative;
+			height:80px;
+			width: 80px;
+			position: absolute;
+			margin: 20px 0 0 10px!important;
+			.circle{
+				width: 80px;	
+				height: 80px;
+				.border-radius(55px);
+				position: absolute;
+				background: darken(@color, 10%);
+				margin: 0;
+			}
+			.image{
+				height: 74px;
+				width: 74px;
+				.border-radius(51px);
+				position: absolute;
+				background-size: 100%;
+				background-position: center center;
+				margin: 3px;
+			}
+		}
+	}
+	.feature-person{
+				padding: 10px 10px 0!important;
+				position: relative;
+			}
+	
+	.info{
+		margin: 0 0 0 110px!important;
+		min-height: 120px;
+		padding: 0 0 0 0!important;
+		h2{
+			font-size: 24px!important;
+			-webkit-font-smoothing: antialiased;
+			font-family: 'Roboto Slab';
+			font-weight: bold;
+			color: darken(@color, 26%);
+			text-transform: uppercase;
+			margin: 0 0 5px!important;
+		}
+		
+		.frequency{
+			background: darken(@color, 16%);
+			padding: 6px 8px!important;
+			font-size: 13px!important;
+			text-transform: uppercase;
+			color: #fff;
+			display: inline-block;
+			.border-radius;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 18px;
+			-webkit-font-smoothing: antialiased;
+			font-family: 'Roboto Slab';
+			margin: 0 5px 10px 0;
+			&:hover{
+				background: darken(@color, 10%);
+			}
+		}
+		
+		.email{
+			background: darken(@color, 16%);
+			padding: 6px 8px!important;
+			font-size: 13px!important;
+			text-transform: uppercase;
+			color: #fff;
+			display: inline-block;
+			.border-radius;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 18px;
+			-webkit-font-smoothing: antialiased;
+			font-family: 'Roboto Slab';
+			margin: 0 0 10px 0;
+			&:hover{
+				background: darken(@color, 10%);
+			}
+		}
+	}
+	.connected-social{
+		position: relative!important;
+		height: 40px;
+		width: auto!important;
+		top: 0!important;
+		margin: 0 0 0 120px!important;
+		li{
+			float: left;
+			width: 40px;
+			height: 40px;
+			margin: 0 10px 10px 0;
+			.border-radius;
+			background: darken(@color, 8%);
+			.icon{
+				font-weight: bold;
+				text-decoration: none;
+				color: #fff;
+				text-align: center;
+				line-height: 40px;
+				font-size: 18px;
+			}
+		}
+	}
+	
+	.social{
+		.clearfix;
+		li{
+			float: left;
+			width: 94%!important;
+			.border-radius;
+			background: lighten(@color, 35%);
+			margin: 0 0 10px!important;
+			padding: 10px 3%!important;
+			color: #666;
+			a{
+				color: #333;
+			}
+		}
+	}
+	
+	.basic{
+		.clearfix;
+		margin: 0 0 1px 0;
+		.border-radius();
+		padding: 10px;
+		font-size: 13px!important;
+		-webkit-font-smoothing:antialiased;
+		.countdown{
+			.border-radius;
+			float: left;
+			padding: 6px 8px;
+			margin: 0 8px 0 0;
+			width: 18%!important;
+			text-align: center;
+			transition: all 200ms linear;
+			-webkit-transition: all 200ms linear;
+		}
+		p{
+			float: right;
+			margin: 0;
+			width: 73%!important;
+			line-height: 22px;
+		}
+		
+	}
+
+}

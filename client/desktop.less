@@ -1,0 +1,99 @@
+@media only screen and (min-width: 640px) {
+
+	
+	.mobile{
+	display: none;
+	}
+	.clearfix {
+	    zoom: 1;
+	    &:before, &:after {
+	        content: "";
+	        display: table;
+	    }
+	    &:after {
+	        clear: both;
+	    }
+	}
+	
+	@color: #309ed1;
+	
+	.border-radius(@px: 4px){
+		border-radius: @px;
+	}
+	
+	header{
+		height: 54px;
+		.clearfix;
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 999;
+		.logo{
+			float: left;
+			width: 189px;
+			height: 40px;
+			padding: 7px!important;
+			margin: 0 0 0 5px;
+			background: url('../images/fyn-desktop.png') center center no-repeat;
+			background-size: 100%;
+			display: block;
+			text-indent: -9999px;
+		}
+		.nav{
+			float: right;
+			li{
+				float: left;
+			}
+			a{
+				height: 54px;
+				line-height: 52px;
+				display: block;
+				padding: 0 12px;
+				color: #fff;
+				text-decoration: none;
+				text-shadow: 1px 1px 0 rgba(0,0,0,.1);
+			}
+		}
+	}
+	
+	#contacts{
+		margin: 54px 0 0;
+		width: 300px;
+	}
+	
+	.pane{
+		position: fixed;
+		top: 74px;
+		right: 20px;
+		left: 320px;
+		bottom: 20px;
+	}
+	
+	
+	#notifications{
+		.avatar{
+			position: relative;
+			height:120px;
+			width: 120px;
+			position: absolute;
+			.circle{
+				width: 110px;
+				height: 110px;
+				.border-radius(55px);
+				position: absolute;
+				background: darken(@color, 10%);
+				margin: 5px;
+			}
+			.image{
+				height: 102px;
+				width: 102px;
+				.border-radius(51px);
+				position: absolute;
+				background-size: 100%;
+				background-position: center center;
+				margin: 9px;
+			}
+		}
+	}
+
+}
