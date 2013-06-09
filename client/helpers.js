@@ -13,3 +13,7 @@ Handlebars.registerHelper('nextContactString', function(nextContact) {
 	// strip out from now
 	return Date.create(nextContact).relative().replace(' from now', '');
 });
+
+Handlebars.registerHelper('debugger', function(param) {
+       debugger;
+ });
