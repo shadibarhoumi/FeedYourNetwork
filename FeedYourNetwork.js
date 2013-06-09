@@ -3,7 +3,6 @@
 if (Meteor.isClient) {
   // CONTACTS
   Template.eachContact.contact = function() {
-
     return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"]}).fetch();
   };
 
@@ -66,6 +65,7 @@ if (Meteor.isClient) {
         Contacts.insert({
           userId: Meteor.userId(),
           name: obj.name,
+          pictureUrl: fbApi.getFriendProfilePics(obj.id),
           facebook: obj,
           flagged: false
         });
@@ -106,7 +106,6 @@ if (Meteor.isClient) {
     }
 
   });
-
   // notifications
   Template.notifications.upcoming = function() {
     var notifications =  Notifications.find({userId: Meteor.userId()}, {sort: ["nextContact", "asc"]}).fetch();
@@ -163,7 +162,6 @@ if (Meteor.isClient) {
 
   };
 
-
   Accounts.ui.config({
     requestPermissions: {
       facebook: ['email']
@@ -178,7 +176,6 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-
     Contacts.allow({
       insert: function(userId, doc) {
         return userId === doc.userId;
