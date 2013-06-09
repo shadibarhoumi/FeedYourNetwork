@@ -17,16 +17,13 @@
     <script type="in/Login" data-onAuth="onLinkedInAuth"></script>
     {{loginButtons align="right"}}
     {{#if currentUser}}
-      <button class="loadContacts">Load Contacts</button>
+      <button class="loadContacts">Load LinkedIn and Facebook Contacts</button>
     {{/if}}
   </div>
 </template>
 
 <template name="contacts">
   <div class="contacts" style="float: left">
-  {{#if currentUser}}
-    <button class="loadContacts">Load LinkedIn and Facebook Contacts</button>
-  {{/if}}
   <h3>Contacts</h3>
 
   <div class="add-contact">
