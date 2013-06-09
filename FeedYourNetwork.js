@@ -74,31 +74,6 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.eachContact.events({
-    'click .submit-interval': function(e) {
-      var contactId = $(e.target).closest('li').attr('id');
-      // turn interval into future date: append 'later' to get a date x days/weeks in the future
-      var intervalText = $(e.target).prev('.interval').val();
-      // interval is a number of milliseconds
-      var interval = Date.create(intervalText + ' later').getTime() - Date.create('now').getTime();
-      // nextContact is next date you should talk to contact
-      var nextContact = Date.create(Date.create('now').getTime() + interval).getTime();
-
-      Contacts.update(contactId, {$set: {interval: interval, nextContact: nextContact}});
-
-      var contact = Contacts.findOne(contactId);
-
-      Notifications.insert({
-          userId: Meteor.userId(),
-          name: contact.name,
-          contactId: contact._id,
-          nextContact: contact.nextContact,
-          nextContactString: Date.create(nextContact).relative().replace(' from now', ''),
-          message: "Talk to " + contact.name + " in " + Date.create(contact.nextContact).relative().replace(' from now', '')
-        });
-    }
-  });
-
   // notifications
   Template.notifications.upcoming = function() {
     var notifications =  Notifications.find({userId: Meteor.userId()}, {sort: ["nextContact", "asc"]}).fetch();
@@ -158,6 +133,10 @@ if (Meteor.isClient) {
       alert($(e.target).attr('id'));
     }
   });
+
+  Template.panel.data = function() {
+    return Session.get('currentPanelData');
+  };
 
   Accounts.ui.config({
     requestPermissions: {
