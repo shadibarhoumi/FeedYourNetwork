@@ -1,4 +1,4 @@
-var updates = 'positions,skills,educations,headline,expertise'
+var updates = 'positions,skills,educations,headline,expertise';
 
 Template.linkedinStream.events({
   'click button.linkedinStream' : function(event, template) {
@@ -20,6 +20,7 @@ Template.linkedinStream.events({
             var type = obj.updateType;
             var content = obj.updateContent.person;
             var url = content.siteStandardProfileRequest.url;
+            var timestamp = obj.timestamp;
             //note: docs refer to "PRFU", but response only has "PROF"
             if (type === 'PROF') {
               var nextString = handleProfileUpdate(content, obj.updatedFields.values);
@@ -43,7 +44,7 @@ Template.linkedinStream.events({
                 string += "'s status: " + comment; 
               }
             }
-            updates.push(string);
+            updates.push({update:string, time:timestamp, relative: new Date(timestamp).relative()});
           } //end for
           console.log(updates);
         } //end if
@@ -110,7 +111,7 @@ var handleProfileUpdate = function(content, updatedFields) {
         }
         array.push(item[digger].name);
       }
-      string += ' added to his '+prop + ': ';
+      string += ' added to '+prop + ': ';
       string += array.join(', ');
     }
   }
