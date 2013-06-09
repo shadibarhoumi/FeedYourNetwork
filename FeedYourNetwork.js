@@ -26,7 +26,7 @@ if (Meteor.isClient) {
           });
         }
       };
-      //pass the asynconous block
+      //pass the asynchronous block
       fbApi.getFriendsList(callback);
 
       IN.API.Connections("me")
@@ -97,6 +97,20 @@ if (Meteor.isClient) {
           nextContactString: Date.create(nextContact).relative().replace(' from now', ''),
           message: "Talk to " + contact.name + " in " + Date.create(contact.nextContact).relative().replace(' from now', '')
         });
+    }, 
+    'click .last-status': function(e) {
+      var contactId = $(e.target).closest('li').attr('id');
+      var contact = Contacts.findOne(contactId);
+      if (contact.linkedin) {
+        alert('this contact is connected only via linkedin');
+      } else if (contact.facebook) {
+        console.log('this is a fb contact, lets go!');
+        var profileId = contact.facebook.id;
+        var callback = function(status) {
+          alert(status);
+        };
+        fbApi.getFriendStatus(profileId, callback);
+      }
     }
   });
 

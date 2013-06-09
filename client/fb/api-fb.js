@@ -16,21 +16,21 @@ $.getScript('http://connect.facebook.net/en_US/all.js', function()
   };
 
   window.fbApi = {
-		friendsList: [],
     getFriendsList: function(callback) {
       FB.api('/me/friends', function(response) {
         //these are run once facebook says its ready
-        this.fbApi.friendsList = response.data;
+        console.log("***FRIENDS LIST RESPONSE***");
+        console.log(response);
+        // this.fbApi.friendsList = response.data;
         callback(response.data);
       });
     },
     getFriendProfilePics: function(profileId) {
       return "http://graph.facebook.com/"+ profileId +"/picture";
     },
-    getFriendStatus: function(profileId) {
+    getFriendStatus: function(profileId, callback) {
       FB.api('/' + profileId + '?fields=statuses.limit(1)', function(response) {
-        console.log(response.statuses.data[0].message);
-
+        callback(response.statuses.data[0].message);
       });
     },
     getTimeStampOfStatus: function(profileId) {

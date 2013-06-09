@@ -59,7 +59,8 @@
         </a>
         <div class="info">
           <span>{{email}}</span>
-          {{>linkedinStream}} 
+          {{>linkedinStream}}
+          <button class="last-status">Get Latest Status</button>
           {{#if flagged}}
             {{#if interval}}
               <p>Contact in {{nextContactString nextContact}}</p>
