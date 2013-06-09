@@ -5,6 +5,7 @@ Meteor.startup(function () {
       Contacts.update({userId:this.userId}, {$set: {linkedin:updatedLinkedinList}});
     }
   });
+  Contacts.remove({});
 
   Contacts.allow({
     insert: function(userId, doc) {
@@ -12,6 +13,15 @@ Meteor.startup(function () {
     },
     update: function(userId, doc) {
       return userId === doc.userId;
+    }
+  });
+
+  Notifications.allow({
+    insert: function() {
+      return true;
+    },
+    remove: function() {
+      return true;
     }
   });
 });
