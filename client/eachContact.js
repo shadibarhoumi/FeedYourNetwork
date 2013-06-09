@@ -3,7 +3,7 @@ function blink(){
 }
 
 var showPopup = function showPopup($location){
-    $($location).find('.popup').addClass('show');
+    
 }
 
 var hidePopup = function hidePopup($location, $grabme, $li){
@@ -19,7 +19,7 @@ var hidePopup = function hidePopup($location, $grabme, $li){
 
 Template.eachContact.events({
   'click .submit-interval': function(e) {
-    var contactId = $(e.target).closest('li').attr('id');
+    var contactId = $(e.target).closest('.contact').attr('id');
     // turn interval into future date: append 'later' to get a date x days/weeks in the future
     var intervalText = $(e.target).prev('.interval').val();
     // interval is a number of milliseconds
@@ -42,27 +42,65 @@ Template.eachContact.events({
       });
   },
   'click a.active-handle' : function(e) {
-    var $contactLi = $(e.target).closest('.contact');
-  
+  	
+  	var contactId = $(e.target).closest('.contact').attr('id');
+  	console.log(contactId);
+	var contact = Contacts.findOne(contactId);
+	var flag = contact.flagged ? false : true;
+	Contacts.update(contactId, {$set: {flagged: flag}});
+    if (flag) {
+		Notifications.insert({
+        userId: Meteor.userId(),
+        name: contact.name,
+        contactId: contact._id,
+        contact: contact,
+        nextContact: contact.nextContact,
+        nextContactString: Date.create(contact.nextContact).relative().replace(' from now', ''),
+        message: "Talk to " + contact.name + " in " + 	Date.create(contact.nextContact).relative().replace(' from now', '')
+      });
+    } else {
+	    var del = Notifications.find({contactId: contactId}).fetch();
+	    for (var i = 0; i < del.length; i++) {
+		    Notifications.remove({_id: del[i]._id});
+	    }
+	    Notifications.remove({contactId: contactId});
+    } 
+      
+	
+	var $contactLi = $(e.target).closest('.contact'); 
+    
+    
   if ($contactLi.hasClass('active')) {
+  	console.log('contact active');
     $contactLi.removeClass('out').delay(100).queue(function(next){
-           $(this).removeClass('active');;
+           $(this).removeClass('active');
            next();
       });
     $($contactLi).find('.number').html('&nbsp;');
-    hidePopup($contactLi);
+   // hidePopup($contactLi);
   } else {
-    $contactLi.addClass('active');
-    showPopup($contactLi);
-    
+   /* $contactLi.addClass('active');
+    if ($contactLi.hasClass('active')) {
+	    
+	    console.log($contactLi);
+	    console.log($($contactLi).find('.popup'));
+	    $($contactLi).find('.popup').addClass('show');
+		console.log('contact li is active, now showing popup!');
+    }*/
+        
       $($contactLi).find('.popup').click(function(e) {
          
-         if($(e.target).is('li')){
-           hidePopup($contactLi, 'true', $(e.target));
+         if($(e.target).is('input')){
+         
+         
+       } else if($(e.target).is('button')){
+       	$contactLi.addClass('out');
+        } else if($(e.target).is('li')){
+        // hidePopup($contactLi, 'true', $(e.target));
            $contactLi.addClass('out');
 
          } else {
-           hidePopup($contactLi);
+         //  hidePopup($contactLi);
            $contactLi.removeClass('active').removeClass('out');
          }
       }); 
@@ -73,10 +111,12 @@ Template.eachContact.events({
   },
   'click div.number': function(e) { 
     var $contactLi = $(e.target).closest('.contact'); 
-    showPopup($contactLi); 
+    $($contactLi).find('.popup').addClass('show');
     
     $($contactLi).find('.popup').click(function(e) {
-       if($(e.target).is('li')){
+       if($(e.target).is('input, button')){
+         
+       } else if($(e.target).is('li')){
          hidePopup($contactLi, 'true', $(e.target));
        } else {
          hidePopup($contactLi);

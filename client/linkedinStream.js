@@ -1,4 +1,4 @@
-var updates = 'positions,skills,educations,headline,expertise';
+/*var updates = 'positions,skills,educations,headline,expertise';
 
 // Template.linkedinStream.events({
 //   'click button.linkedinStream' : function(event, template) {
@@ -125,4 +125,4 @@ var handlePosition = function(item) {
 };
 
 //profile update needs to handle multiple stories (currently picks the first found)
-//if we want to notify of updated headlines, headline appears in both updatedFields andd it always appears in normal content (we have blacklisted it!)
+//if we want to notify of updated headlines, headline appears in both updatedFields andd it always appears in normal content (we have blacklisted it!)*/

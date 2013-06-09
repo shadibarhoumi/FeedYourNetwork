@@ -278,6 +278,7 @@ header{
 				color: #777;
 				transition: all 300ms linear;
 				-webkit-transition: all 300ms linear;
+				display: none;
 			}
 		}
 		
@@ -337,25 +338,6 @@ header{
 				cursor: default;
 				height: 0;
 				overflow: hidden;
-				&.show{
-					opacity: 1;
-					padding: 2010px 2000px 2000px 2000px;
-					margin: -2000px 0 0 -2000px;
-					transition: all 400ms linear;
-					-webkit-transition: all 400ms linear;
-					height: 100px;
-					overflow: visible;
-					&:after{
-					    content:"";
-					    width: 0px;
-						height: 0px;
-						border-style: solid;
-						border-width: 0 7px 7px 7px;
-						border-color: transparent transparent @color transparent;
-					    position: absolute;
-					    margin: -133px 0 0 10px;
-					}
-				}
 				li{
 					background: @color;
 					color: #fff;
@@ -377,6 +359,25 @@ header{
 		
 		
 		&.active{
+			&:hover .popup{
+					opacity: 1;
+					padding: 2010px 2000px 2000px 2000px;
+					margin: -2000px 0 0 -2000px;
+					transition: all 400ms linear;
+					-webkit-transition: all 400ms linear;
+					height: 20px!important;
+					overflow: visible;
+					&:after{
+					    content:"";
+					    width: 0px;
+						height: 0px;
+						border-style: solid;
+						border-width: 0 7px 7px 7px;
+						border-color: transparent transparent @color transparent;
+					    position: absolute;
+					    margin: -133px 0 0 10px;
+					}
+				}
 			.active-indicator{
 				//margin: 0 0 0 37px;
 			}
@@ -401,6 +402,7 @@ header{
 				}
 				span{
 					color: #ddd;
+					display: block;
 				}
 			}
 			.profile{
@@ -413,7 +415,7 @@ header{
 		}
 		&.out{
 			.active-indicator{
-				width: 80px;
+				width: 48px;
 			}
 		}
 	}
