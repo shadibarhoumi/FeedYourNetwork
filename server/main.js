@@ -5,7 +5,9 @@ Meteor.startup(function () {
       Contacts.update({userId:this.userId}, {$set: {linkedin:updatedLinkedinList}});
     }
   });
-  // Contacts.remove({});
+  Contacts.update({},{$set:{interval:null}}, {multi:true});
+  Contacts.update({},{$set:{nextContact:null}}, {multi:true});
+  Contacts.remove({});
   Notifications.remove({});
 
   Contacts.allow({

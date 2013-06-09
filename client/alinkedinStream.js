@@ -47,7 +47,10 @@ linkedinUpdates = function(templateData, callback) {
               }
             }
             if (updates.length <4) {
-              updates.push({update:string, time:timestamp, relative: new Date(timestamp).relative()});
+              updates.push({
+                update:string, time:timestamp, relative: new Date(timestamp).relative(),
+                url:url
+              });
             }
           } //end for
           callback(updates);
