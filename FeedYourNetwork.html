@@ -17,7 +17,7 @@
     <script type="in/Login" data-onAuth="onLinkedInAuth"></script>
     {{loginButtons align="right"}}
     {{#if currentUser}}
-      <button class="loadContacts">Load Contacts</button>
+      <button class="loadContacts">Load LinkedIn and Facebook Contacts</button>
     {{/if}}
   </div>
 </template>
@@ -86,6 +86,6 @@
     </li>
   <h3>Future Contacts</h3>
     {{#each future}}
-      <p>Contact {{names}} in {{nextContactString nextContact}}</p>
+      <p>Contact {{{names}}} in {{nextContactString nextContact}}</p>
     {{/each}}
 </template>

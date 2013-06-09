@@ -92,6 +92,7 @@ if (Meteor.isClient) {
       Notifications.insert({
           userId: Meteor.userId(),
           name: contact.name,
+          contactId: contact._id,
           nextContact: contact.nextContact,
           nextContactString: Date.create(nextContact).relative().replace(' from now', ''),
           message: "Talk to " + contact.name + " in " + Date.create(contact.nextContact).relative().replace(' from now', '')
@@ -145,15 +146,19 @@ if (Meteor.isClient) {
         } else if (j > 0) {
           prefix = ", "
         }
-        names += prefix + groups[i][j].name;
+        names += prefix + "<a id=" + "'" + groups[i][j].contactId + "'" + "class='contact-link' href='#'>" + groups[i][j].name + '</a>';
       }
         squished.push({names: names, nextContact: nextContact});
     }
 
     return squished;
-
-
   };
+
+  Template.notifications.events({
+    'click .contact-link': function(e) {
+      alert($(e.target).attr('id'));
+    }
+  });
 
   Accounts.ui.config({
     requestPermissions: {
