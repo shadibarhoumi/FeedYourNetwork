@@ -134,13 +134,6 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.panel.date = function() {
-    var data = Session.get('currentPanelData');
-
-  }
-
-
-
 
 var linkedInCallback = function(list) {
     if (list) {
@@ -162,21 +155,6 @@ var linkedInCallback = function(list) {
   Template.panel.streams = function() {
     return Session.get('currentPanelStream') || [];
   };
-//active, manual views
-  // Template.panel.contact = function() {
-  //   debugger;
-  // };
-  // //auto notifs
-  // Template.streams.streams = function() {
-  //   // console.log('get auto data');
-
-  //   // return Session.get('currentPanelStream');
-  // };
-  // //active, manual views:
-  // Template.streamsActive.streams = function() {
-  //   // console.log('gener manual data');
-  //   // return Session.get('currentPanelStreamActive');
-  // };
 
   Accounts.ui.config({
     requestPermissions: {

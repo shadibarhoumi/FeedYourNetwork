@@ -27,9 +27,7 @@ Template.eachContact.events({
     // nextContact is next date you should talk to contact
     var nextContact = Date.create(Date.create('now').getTime() + interval).getTime();
 
-    Contacts.update(contactId, {$set: {interval: interval, nextContact: nextContact}}, function() {
-      console.log(arguments);
-    });
+    Contacts.update(contactId, {$set: {interval: interval, nextContact: nextContact}});
 
     var contact = Contacts.findOne(contactId);
     console.log(contact);
@@ -119,8 +117,6 @@ Template.eachContact.events({
       $('#notifications').removeClass('out');
       
       $('#contact').removeClass('open');
-      // Session.set('currentPanelStream',[]);
-      // Session.set('currentPanelStreamActive',[]);
 
 
     });
