@@ -32,6 +32,8 @@ Teammates can push to your branch by doing commits and then push explicitly.
 
 #When you want new code from another branch#
 
+	git rebase
+
 To pull down the latest changes from the a branch to you local feature branch, you must merge the branch with your local feature branch. 
 
 	git checkout your_branch 
