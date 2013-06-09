@@ -6,7 +6,7 @@ Meteor.startup(function () {
     }
   });
   // Contacts.remove({});
-  // Notifications.remove({});
+  Notifications.remove({});
 
   Contacts.allow({
     insert: function(userId, doc) {
@@ -22,6 +22,9 @@ Meteor.startup(function () {
       return true;
     },
     remove: function() {
+      return true;
+    },
+    update: function() {
       return true;
     }
   });

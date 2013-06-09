@@ -50,8 +50,6 @@ linkedinUpdates = function(templateData, callback) {
               updates.push({update:string, time:timestamp, relative: new Date(timestamp).relative()});
             }
           } //end for
-          console.log('call');
-          console.log(updates);
           callback(updates);
         } //end if
        });
