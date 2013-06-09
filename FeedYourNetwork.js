@@ -4,7 +4,7 @@ if (Meteor.isClient) {
 
   // CONTACTS
   Template.eachContact.contact = function() {
-    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}).fetch();
+    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"]}).fetch();
   };
 
   Template.eachContact.events({
@@ -59,9 +59,12 @@ if (Meteor.isClient) {
     var callback = function(fbFriendsList) {
       for (var i = 0; i < fbFriendsList.length; i++) {
         var obj = fbFriendsList[i];
+        
+        //var profilePicUrl = obj.pictureUrl ? obj.pictureUrl : "http://www.s.co/sites/default/files/default_profile_image.png";
         Contacts.insert({
           userId: Meteor.userId(),
           name: obj.name,
+          pictureUrl: fbApi.getFriendProfilePics(obj.id),
           facebook: obj,
           flagged: false
         });

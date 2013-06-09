@@ -23,6 +23,9 @@ $.getScript('http://connect.facebook.net/en_US/all.js', function()
         this.fbApi.friendsList = response.data;
         callback(response.data);
       });
+    },
+    getFriendProfilePics: function(profileId) {
+      return "http://graph.facebook.com/"+ profileId +"/picture";
     }
 	};
 });
