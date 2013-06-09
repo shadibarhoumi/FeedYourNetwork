@@ -99,10 +99,6 @@ if (Meteor.isClient) {
     }
   });
 
-Template.eachContact.preserve({
-  // ''
-});
-
   // notifications
   Template.notifications.upcoming = function() {
     var notifications =  Notifications.find({userId: Meteor.userId()}, {sort: ["nextContact", "asc"]}).fetch();
