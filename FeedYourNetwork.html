@@ -16,7 +16,7 @@
   <div class="login" style="float: right">
     <script type="in/Login" data-onAuth="onLinkedInAuth"></script>
     {{loginButtons align="right"}}
-    {{#if isLinkedinAuth}}
+    {{#if currentUser}}
       <button class="loadContacts">Load Contacts</button>
     {{/if}}
   </div>
@@ -24,9 +24,6 @@
 
 <template name="contacts">
   <div class="contacts" style="float: left">
-  {{#if currentUser}}
-  <button class="loadContacts">Load LinkedIn and Facebook Contacts</button>
-  {{/if}}
   <h3>Contacts</h3>
 
   <div class="add-contact">
@@ -78,7 +75,6 @@
   {{#if linkedin}}
     <button class="linkedinStream">Get linkedin updates</button>
   {{/if}}
-</template>
   <h3>Upcoming Contacts</h3>
     <li>
       {{#each upcoming}}

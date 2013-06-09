@@ -19,6 +19,7 @@ if (Meteor.isClient) {
           Contacts.insert({
             userId: Meteor.userId(),
             name: obj.name,
+            pictureUrl: fbApi.getFriendProfilePics(obj.id),
             facebook: obj,
             flagged: false
           });
@@ -43,7 +44,7 @@ if (Meteor.isClient) {
           }
         });
     }
-  })
+  });
 
 
   // CONTACTS
