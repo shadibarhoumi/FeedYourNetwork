@@ -2,10 +2,10 @@ var updates = 'positions,skills,educations,headline,expertise';
 
 // Template.linkedinStream.events({
 //   'click button.linkedinStream' : function(event, template) {
-  var linkedinUpdates = function(linkedinData, callback) {
+linkedinUpdates = function(templateData, callback) {
     // var string = template.data.name;
-
-    IN.API.MemberUpdates(linkedinData)//template.data.linkedin.id
+  if (IN.API) {
+    IN.API.MemberUpdates(templateData.linkedin.id)
        // .fields(["isLiked","updateContent:(person:(headline,first-name))"])
        //share SHAR, viral (comments, likes) VIRL, profile change PRFU, job posting JOBS, 
        //for now, we will only handle SHAR and PRFU
@@ -16,7 +16,7 @@ var updates = 'positions,skills,educations,headline,expertise';
         var updates = [];
         if (data.values) {
           for (var i = 0; i < data.values.length; i++) {
-          var string = template.data.name;
+          var string = templateData.name;
 
             var obj = data.values[i];
             var type = obj.updateType;
@@ -46,13 +46,17 @@ var updates = 'positions,skills,educations,headline,expertise';
                 string += "'s status: " + comment; 
               }
             }
-            updates.push({update:string, time:timestamp, relative: new Date(timestamp).relative()});
+            if (updates.length <4) {
+              updates.push({update:string, time:timestamp, relative: new Date(timestamp).relative()});
+            }
           } //end for
+          console.log('call');
+          console.log(updates);
           callback(updates);
         } //end if
        });
   }
-});
+};
 //industry in profile 
 var whitelist = {
   positions: 'position',

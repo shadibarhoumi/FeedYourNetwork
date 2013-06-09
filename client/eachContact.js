@@ -31,19 +31,42 @@ Template.eachContact.events({
 
     var contact = Contacts.findOne(contactId);
 
-    Notifications.insert({
-        userId: Meteor.userId(),
-        name: contact.name,
-        contactId: contact._id,
-        contact: contact,
-        nextContact: contact.nextContact,
-        nextContactString: Date.create(nextContact).relative().replace(' from now', ''),
-        message: "Talk to " + contact.name + " in " + Date.create(contact.nextContact).relative().replace(' from now', '')
-      });
+    if (contact.linkedin) {
+        Notifications.insert({
+          userId: Meteor.userId(),
+          name: contact.name,
+          contactId: contact._id,
+          contact: contact,
+          streams:[],
+          nextContact: contact.nextContact,
+          nextContactString: Date.create(nextContact).relative().replace(' from now', ''),
+          message: "Talk to " + contact.name + " in " + Date.create(contact.nextContact).relative().replace(' from now', '')
+        }, function(err,_id) {
+          var callback = function(list) {
+            console.log('li done');
+            list = list || [];
+            Notifications.update(_id,{$set:{streams:list}});
+          };
+          linkedinUpdates(contact, callback);
+        });
+      }
+    else {
+        Notifications.insert({
+          userId: Meteor.userId(),
+          name: contact.name,
+          contactId: contact._id,
+          contact: contact,
+          streams:[],
+          nextContact: contact.nextContact,
+          nextContactString: Date.create(nextContact).relative().replace(' from now', ''),
+          message: "Talk to " + contact.name + " in " + Date.create(contact.nextContact).relative().replace(' from now', '')
+        });
+    }
   },
   'click a.active-handle' : function(e) {
     var $contactLi = $(e.target).closest('.contact');
-  
+    // Session.set('currentPanelStream',[]);
+    // Session.set('currentPanelStreamActive',[]);
   if ($contactLi.hasClass('active')) {
     $contactLi.removeClass('out').delay(100).queue(function(next){
            $(this).removeClass('active');;
@@ -94,6 +117,10 @@ Template.eachContact.events({
       $('#notifications').removeClass('out');
       
       $('#contact').removeClass('open');
+      // Session.set('currentPanelStream',[]);
+      // Session.set('currentPanelStreamActive',[]);
+
+
     });
   }
 });

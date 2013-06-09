@@ -96,7 +96,7 @@
 </template>
 
 <template name="panel">
-  {{#with data}}
+  {{#with contact}}
   <div class="pane" id="contact">
 
   <div class="card-wrap">
@@ -125,11 +125,7 @@
         <li class="linked"><div class="icon">l</div></li>
       </ul>
       
-      <ul class="social">
-        <li class="event">5 Days Ago: <a href="#">Case Sandberg</a> changed his relationship status to <b>In A Relationship</b></li>
-        <li class="event">9 Days Ago: <a href="#">Case Sandberg</a> attended <a href="#">Dada Life at the Craneway Pavilion</a> and added 4 friends afterwards</li>
-        <li class="event">102 Days Ago: <a href="#">Case Sandberg</a> changed his current location to <b>San Francisco, CA</b></li>
-      </ul>
+      {{>streams}}
       
     </div>
   </div>
@@ -187,15 +183,8 @@
     </li>
 </template>
 
-<template name="linkedinStream">
-  {{#if linkedin}}
-    <button class="linkedinStream">Get linkedin updates</button>
-  {{/if}}
-</template>
-
 <template name="notifications">
   <div class="pane" id="notifications">
-  
   	<ul>
    		 <li class="feature">
 	   		 <h1>Contact These Guys!</h1>
@@ -224,12 +213,9 @@
 							<li class="twitter"><div class="icon">t</div></li>
 							<li class="linked"><div class="icon">l</div></li>
 						</ul>
-						
-						<ul class="social">
-							<li class="event">5 Days Ago: <a href="#">Case Sandberg</a> changed his relationship status to <b>In A Relationship</b></li>
-							<li class="event">9 Days Ago: <a href="#">Case Sandberg</a> attended <a href="#">Dada Life at the Craneway Pavilion</a> and added 4 friends afterwards</li>
-							<li class="event">102 Days Ago: <a href="#">Case Sandberg</a> changed his current location to <b>San Francisco, CA</b></li>
-						</ul>
+        {{#with contact}}
+						{{>streams}}
+        {{/with}}
 
 
 		   		 	</li>
@@ -248,4 +234,24 @@
     
   </div>
     
+</template>
+
+<template name="streamsActive">
+  <ul class="social">
+  {{#each streams}}
+  {{>stream}}
+  {{/each}}
+  </ul>
+</template>
+
+<template name="streams">
+  <ul class="social">
+  {{#each streams}}
+  {{>stream}}
+  {{/each}}
+  </ul>
+</template>
+
+<template name="stream">
+<li class="event">{{relative}}: {{update}}</li>
 </template>

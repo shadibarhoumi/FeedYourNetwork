@@ -134,9 +134,46 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.panel.data = function() {
-    return Session.get('currentPanelData');
+var linkedInCallback = function(list) {
+    if (list) {
+      console.log(list);
+      Session.set('currentPanelStream',list);
+    }
+    else {
+      Session.set('currentPanelStream',[]);
+    }
   };
+
+//active, manual views
+  Template.panel.data = function() {
+    console.log('gener manual data');
+    var data = Session.get('currentPanelData');
+    if (data && data.linkedin) {
+      // linkedinUpdates(data, linkedInCallback);
+    }
+    return data;
+  };
+  //automatic notifications:
+   Template.notifications.data = function() {
+    console.log('gener auto data');
+    var data = Session.get('currentPanelData');
+    if (data && data.linkedin) {
+      // linkedinUpdates(data, linkedInCallback);
+    }
+    return data;
+  };
+
+  // //auto notifs
+  // Template.streams.streams = function() {
+  //   // console.log('get auto data');
+    
+  //   // return Session.get('currentPanelStream');
+  // };
+  // //active, manual views:
+  // Template.streamsActive.streams = function() {
+  //   // console.log('gener manual data');
+  //   // return Session.get('currentPanelStreamActive');
+  // };
 
   Accounts.ui.config({
     requestPermissions: {
