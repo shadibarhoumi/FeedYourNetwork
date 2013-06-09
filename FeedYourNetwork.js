@@ -48,7 +48,7 @@ if (Meteor.isClient) {
   });
 
   Template.contactList.contacts = function() {
-    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"], limit: 5});
+    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"], limit: 30});
   };
 
   // CONTACTS
