@@ -134,6 +134,11 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.panel.date = function() {
+    var data = Session.get('currentPanelData');
+
+  }
+
 
 
 
@@ -147,6 +152,7 @@ var linkedInCallback = function(list) {
   };
  Template.panel.data = function() {
     var data = Session.get('currentPanelData');
+    console.log(data);
     if (data && data.linkedin) {
       linkedinUpdates(data, linkedInCallback);
     }

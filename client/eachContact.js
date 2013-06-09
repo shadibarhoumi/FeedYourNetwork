@@ -27,7 +27,9 @@ Template.eachContact.events({
     // nextContact is next date you should talk to contact
     var nextContact = Date.create(Date.create('now').getTime() + interval).getTime();
 
-    Contacts.update(contactId, {$set: {interval: interval, nextContact: nextContact}});
+    Contacts.update(contactId, {$set: {interval: interval, nextContact: nextContact}}, function() {
+      console.log(arguments);
+    });
 
     var contact = Contacts.findOne(contactId);
     console.log(contact);
