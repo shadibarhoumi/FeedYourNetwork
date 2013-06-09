@@ -48,7 +48,7 @@ if (Meteor.isClient) {
   });
 
   Template.contactList.contacts = function() {
-    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"]});
+    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"], limit: 5});
   };
 
   // CONTACTS
@@ -66,7 +66,7 @@ if (Meteor.isClient) {
       var query = $('.search-contact .search').val();
       Session.set('query', query);
     },
-    'click .name, click .avatar': function(e) {
+    'click .name h2, click .avatar': function(e) {
       var contactId = $(e.target).closest('li').attr('id');
       var contact = Contacts.findOne(contactId);
       var flag = contact.flagged ? false : true;

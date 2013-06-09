@@ -59,13 +59,14 @@
       	<li><button style="margin: 15px 10px 0 0;" class="loadContacts">Load</button></li>
 		<li><a href="#">FAQ</a></li>
 		<li><a href="#">Contact</a></li>
-		<li><a href="#">Logout</a></li>
+		<li><a href="#"><script type="in/Login" data-onAuth="onLinkedInAuth"></script>
+			{{loginButtons align="right"}}</a></li>
 	</ul>
     {{else}}
     
     <ul class="nav">
 		<li><script type="in/Login" data-onAuth="onLinkedInAuth"></script>
-    {{loginButtons align="right"}}</li>
+			{{loginButtons align="right"}}</li>
 	</ul>
     	
     {{/if}}
@@ -79,7 +80,7 @@
 
   <div class="add-contact">
     <h4>Add Contact:</h4>
-    <input class="name" type="text" placeholder="Name">
+    <input class="name" type="text" placeholder="New Contact Name">
     <input class="email" type="email" placeholder="Email">
     <button class="submit">Add Contact</button>
   </div>
@@ -144,22 +145,22 @@
 
 
 <template name="eachContact">
-    <li id="{{_id}}" class="contact">
+    <li id="{{_id}}" class="contact {{#if flagged}}active out{{/if}}">
         
     	<div class="frequency">
 				<div class="count">
-					<div class="number">1<span>/</span>W</div>
+					<!--<div class="number">1<span>/</span>W</div>-->
 					
-					<ul class="popup">
-						<li data-frequency-slug="1<span>/</span>W">Once a Week</li>
+					<!--<ul class="popup">
+						<!--<li data-frequency-slug="1<span>/</span>W">Once a Week</li>
 						<li data-frequency-slug="1<span>/</span>M">Once a Month</li>
 						<li data-frequency-slug="2<span>/</span>Y">Every 6 Months</li>
 						<li data-frequency-slug="1<span>/</span>Y">Every Year</li>
-						{{#if interval}}
-			              <p>Contact in {{nextContactString nextContact}}</p>
+						<li>{{#if interval}}
+			              Contact in {{nextContactString nextContact}}
 			            {{else}}
-			              <p>Contact every <input class="interval" type="text"><button class="submit-interval">Set</button></p>
-			            {{/if}}
+			              <input class="interval" type="text" placeholder="How often?"><button class="submit-interval">Set</button>
+			            {{/if}}</li>-->
 					</ul>
 				</div>
 			</div>
@@ -173,9 +174,13 @@
       {{else}}
         LinkedIn
       {{/if}}-->
-        <a class="name active-handle">
-          <h2>{{name}}</h2>
-          <span>{{email}}</span>
+        <a class="name">
+          <h2 class="active-handle">{{name}}</h2>
+          <span>{{#if interval}}
+			              Contact in {{nextContactString nextContact}}
+			            {{else}}
+			              <input class="interval" type="text" placeholder="How often?"><button class="submit-interval">Set</button>
+			            {{/if}}</span>
         </a>
         <div class="profile profile-link">
 		>
@@ -187,7 +192,7 @@
   <div class="pane" id="notifications">
   	<ul>
    		 <li class="feature">
-	   		 <h1>Contact These Guys!</h1>
+	   		 <h1>Contact Soon:</h1>
 	   		 	<ul>
     	
 		   		 	{{#each upcoming}}
@@ -225,7 +230,7 @@
     {{#each future}}
     	<li class="basic">
     		<div class="countdown">{{nextContactString nextContact}}</div>
-			<p>You need to contact {{{names}}} in {{nextContactString nextContact}}.</p>
+			<p>You should contact {{{names}}} in {{nextContactString nextContact}}.</p>
       	</li>
     {{/each}}
   	</ul>
