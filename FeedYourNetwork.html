@@ -25,7 +25,7 @@
 
 <template name="contacts">
   {{#if currentUser}}
-  <button class="loadContacts">Load LinkedIn and Facebook Contacts</button>
+    <button class="loadContacts">Load LinkedIn and Facebook Contacts</button>
   {{/if}}
   <h3>Contacts</h3>
 
@@ -83,7 +83,7 @@
     </li>
   <h3>Future Contacts</h3>
     {{#each future}}
-      <p>Contact {{names}} in {{nextContactString nextContact}}</p>
+      <p>Contact {{{names}}} in {{nextContactString nextContact}}</p>
     {{/each}}
 </template>
 

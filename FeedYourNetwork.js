@@ -3,7 +3,7 @@
 if (Meteor.isClient) {
   // CONTACTS
   Template.eachContact.contact = function() {
-    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"]}).fetch();
+    return Contacts.find({userId: Meteor.userId(), name: {$regex: Session.get('query'), $options: 'i' }}, {sort: ["name", "asc"]});
   };
 
   Template.eachContact.events({
@@ -23,6 +23,7 @@ if (Meteor.isClient) {
       Notifications.insert({
           userId: Meteor.userId(),
           name: contact.name,
+          contactId: contact._id,
           nextContact: contact.nextContact,
           nextContactString: Date.create(nextContact).relative().replace(' from now', ''),
           message: "Talk to " + contact.name + " in " + Date.create(contact.nextContact).relative().replace(' from now', '')
@@ -47,7 +48,8 @@ if (Meteor.isClient) {
     var query = $('.search-contact .search').val();
     Session.set('query', query);
   },
-  
+    
+  // activate contact
   'click .name, click .avatar': function(e) {
     var contactId = $(e.target).closest('li').attr('id');
     var contact = Contacts.findOne(contactId);
@@ -152,15 +154,19 @@ if (Meteor.isClient) {
         } else if (j > 0) {
           prefix = ", "
         }
-        names += prefix + groups[i][j].name;
+        names += prefix + "<a id=" + "'" + groups[i][j].contactId + "'" + "class='contact-link' href='#'>" + groups[i][j].name + '</a>';
       }
         squished.push({names: names, nextContact: nextContact});
     }
 
     return squished;
-
-
   };
+
+  Template.notifications.events({
+    'click .contact-link': function(e) {
+      alert($(e.target).attr('id'));
+    }
+  });
 
   Accounts.ui.config({
     requestPermissions: {
