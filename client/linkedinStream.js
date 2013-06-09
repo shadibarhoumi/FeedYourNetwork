@@ -1,4 +1,4 @@
-var updates = 'positions,skills,educations,headline,expertise'
+var updates = 'positions,skills,educations,headline,expertise';
 
 Template.linkedinStream.events({
   'click button.linkedinStream' : function(event, template) {
