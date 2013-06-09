@@ -84,7 +84,7 @@ if (Meteor.isClient) {
             linkedin: obj,
             flagged: false
           });
-        };
+        }
       });
   }
   });
@@ -104,23 +104,3 @@ if (Meteor.isClient) {
 }
 
 
-
-
-
-//////////////////////////////////////////////////////// SERVER ////////////////////////////////////////////////////////
-
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    Contacts.remove({});
-    
-
-    Contacts.allow({
-      insert: function(userId, doc) {
-        return userId === doc.userId;
-      },
-      update: function(userId, doc) {
-        return userId === doc.userId;
-      }
-    });
-  });
-}
