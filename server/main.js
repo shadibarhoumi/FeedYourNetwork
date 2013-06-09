@@ -5,6 +5,7 @@ Meteor.startup(function () {
       Contacts.update({userId:this.userId}, {$set: {linkedin:updatedLinkedinList}});
     }
   });
+  Contacts.remove({});
 
   Contacts.allow({
     insert: function(userId, doc) {

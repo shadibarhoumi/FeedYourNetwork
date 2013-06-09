@@ -4,29 +4,26 @@
   api_key: a67fqk3wedsg
   authorize: true
 </script>
-<script type="text/javascript" src="lib/sugar-1.3.9.min.js"></script>
 </head>
 
 <body>
-	<div class="login" style="float: right">
-    <script type="in/Login"></script>
-		{{loginButtons align="right"}}
-	</div>
-	<div class="contacts" style="float: left">
-    {{> contacts}}
-	</div>
-  <div class="notifications" style="float: left">
-    {{> notifications}}
-  </div>
-  <div class="">
-
-  </div>
+  {{> login}}	
+  {{> contacts}}
+  {{> notifications}}
 </body>
 
+<template name="login">
+  <div class="login" style="float: right">
+    <script type="in/Login" data-onAuth="onLinkedInAuth"></script>
+    {{loginButtons align="right"}}
+    {{#if isLinkedinAuth}}
+      <button class="loadContacts">Load Contacts</button>
+    {{/if}}
+  </div>
+</template>
+
 <template name="contacts">
-  {{#if currentUser}}
-  <button class="loadContacts">Load LinkedIn Contacts</button>
-  {{/if}}
+  <div class="contacts" style="float: left">
   <h3>Contacts</h3>
 
   <div class="add-contact">
@@ -43,14 +40,14 @@
 
   <ul class="list">
     <h4>All Contacts:</h4>
-    {{> eachContact}}    
+    {{#each contacts}}
+      {{> eachContact}} 
+    {{/each}}   
   </ul>
-
+  </div>
 </template>
 
 <template name="eachContact">
-  {{#each contact}}
-
     <li id="{{_id}}" class="contact" style="border: 2px solid #aeee00;">
       <div class="active-indicator">
         <div class="outline"></div>
@@ -61,6 +58,7 @@
         </a>
         <div class="info">
           <span>{{email}}</span>
+          {{>linkedinStream}}
           {{#if flagged}}
             {{#if frequency}}
               <p>Contact in {{frequency}}</p>
@@ -70,16 +68,21 @@
           {{/if}}
         </div>
     </li>
+</template>
 
-  {{/each}}
+<template name="linkedinStream">
+  {{#if linkedin}}
+    <button class="linkedinStream">Get linkedin updates</button>
+  {{/if}}
 </template>
 
 <template name="notifications">
+  <div class="notifications" style="float: left">
   <h3>Notifications</h3>
   <ul>
     {{#each notification}}
       <li>{{message}}</li>
     {{/each}}
   </ul>
-
+  </div>
 </template>
