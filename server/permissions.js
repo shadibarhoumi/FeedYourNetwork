@@ -24,6 +24,10 @@ Meteor.startup(function () {
   });
 });
 
-Meteor.publish('contactsAndNotifications', function () {
-  return [Contacts.find(this.userId), Notifications.find(this.userId)];
+Meteor.publish('contacts', function (contactIds) {
+  return Contacts.find({_id:{$in:contactIds}, userId:this.userId});
+});
+
+Meteor.publish('notifications', function (notifIds) {
+  return Notifications.find({_id:{$in:notifIds}, userId:this.userId});
 });
