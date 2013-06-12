@@ -5,18 +5,21 @@ Meteor.startup(function () {
     },
     update: function(userId, doc) {
       return userId === doc.userId;
+    },
+    remove: function(userId,doc) {
+      return userId === doc.userId;
     }
   });
 
   Notifications.allow({
-    insert: function() {
-      return true;
+    insert: function(userId, doc) {
+      return userId === doc.userId;
     },
-    remove: function() {
-      return true;
+    remove: function(userId, doc) {
+      return userId === doc.userId;
     },
-    update: function() {
-      return true;
+    update: function(userId, doc) {
+      return userId === doc.userId;
     }
   });
 });
