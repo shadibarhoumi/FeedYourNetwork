@@ -1,3 +1,6 @@
+window.onLinkedInAuth = function() {
+  Session.set('linkedinAuth', true);
+};
 
 Template.login.isLinkedinAuth = function() {
   return Session.get('linkedinAuth');
