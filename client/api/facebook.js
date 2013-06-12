@@ -1,8 +1,5 @@
 $.getScript('http://connect.facebook.net/en_US/all.js', function()
 {
-    // script is now loaded and executed.
-    // put your dependent JS here.
-    console.log('help');
 	window.fbAsyncInit = function() {
     // init the FB JS SDK
     FB.init({

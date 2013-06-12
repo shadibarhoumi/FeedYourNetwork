@@ -68,7 +68,6 @@ var linkedInCallback = function(list) {
 };
 Template.panel.data = function() {
   var data = Session.get('currentPanelData');
-  console.log(data);
   if (data && data.linkedin) {
     linkedinUpdates(data, linkedInCallback);
   }
