@@ -23,3 +23,7 @@ Meteor.startup(function () {
     }
   });
 });
+
+Meteor.publish('contactsAndNotifications', function () {
+  return [Contacts.find(this.userId), Notifications.find(this.userId)];
+});

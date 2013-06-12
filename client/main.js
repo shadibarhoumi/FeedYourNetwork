@@ -1,52 +1,14 @@
-if ($(window).width() < 640) {
-
-$(document).bind("mobileinit", function () {
-    $.mobile.pushStateEnabled = true;
+Deps.autorun(function() {
+    Meteor.subscribe('contactsAndNotifications');
 });
- 
-Meteor.startup(function () {
-    var menuStatus;
-    var show = function() {
-        if(menuStatus) {
-            return;
-        }
-        $('#contacts').show();
-        $('.pane, header').css('position','fixed').animate({
-            marginLeft: "80%"
-        }, 300, function () {
-            menuStatus = true
-        });
-    };
-    var hide = function() {
-        if(!menuStatus) {
-            return;
-        }
-        $('.pane, header').css('position','absolute').animate({
-            marginLeft: "0px"
-        }, 300, function () {
-            menuStatus = false
-            $('#contacts').hide();
-        });
-    };
-    var toggle = function() {
-        if (!menuStatus) {
-            show();
-        } else {
-            hide();
-        }
-        return false;
-    };
- 
-    // Show/hide the menu
-    $(".menu-handle").click(toggle);
 
-});
- 
+window.onLinkedInAuth = function() {
+  Session.set('linkedinAuth', true);
+};
 
-
-} else{
-	notificationsOut = function notificationsOut(){
-		var $note = $('#notifications');
-		$($note).addClass('out');
-	}
-}
+Accounts.ui.config({
+  requestPermissions: {
+    facebook: ['email']
+  },
+  passwordSignupFields: 'USERNAME_AND_EMAIL'
+}); 
