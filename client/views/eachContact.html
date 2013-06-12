@@ -1,27 +1,27 @@
 <template name="eachContact">
     <li id="{{_id}}" class="contact {{#if flagged}}active out{{/if}}">
         
-    	<div class="frequency">
-				<div class="count">
-					<!--<div class="number">1<span>/</span>W</div>-->
-					
-					<!--<ul class="popup">
-						<!--<li data-frequency-slug="1<span>/</span>W">Once a Week</li>
-						<li data-frequency-slug="1<span>/</span>M">Once a Month</li>
-						<li data-frequency-slug="2<span>/</span>Y">Every 6 Months</li>
-						<li data-frequency-slug="1<span>/</span>Y">Every Year</li>
-						<li>{{#if interval}}
-			              Contact in {{nextContactString nextContact}}
-			            {{else}}
-			              <input class="interval" type="text" placeholder="How often?"><button class="submit-interval">Set</button>
-			            {{/if}}</li>-->
-					</ul>
-				</div>
-			</div>
+      <div class="frequency">
+        <div class="count">
+          <!--<div class="number">1<span>/</span>W</div>-->
+          
+          <!--<ul class="popup">
+            <!--<li data-frequency-slug="1<span>/</span>W">Once a Week</li>
+            <li data-frequency-slug="1<span>/</span>M">Once a Month</li>
+            <li data-frequency-slug="2<span>/</span>Y">Every 6 Months</li>
+            <li data-frequency-slug="1<span>/</span>Y">Every Year</li>
+            <li>{{#if interval}}
+                    Contact in {{nextContactString nextContact}}
+                  {{else}}
+                    <input class="interval" type="text" placeholder="How often?"><button class="submit-interval">Set</button>
+                  {{/if}}</li>-->
+          </ul>
+        </div>
+      </div>
 
       <div class="active-indicator">
-      	<a href="#" class="avatar active-handle" id="contact-174" style="background-image: url({{pictureUrl}});"></a>
-		<div class="outline"></div>
+        <a href="#" class="avatar active-handle" id="contact-174" style="background-image: url({{pictureUrl}});"></a>
+    <div class="outline"></div>
       </div>
       <!--{{#if facebook}}
         Facebook
@@ -31,13 +31,13 @@
         <a class="name">
           <h2 class="active-handle">{{name}}</h2>
           <span>{{#if interval}}
-			              Contact in {{nextContactString nextContact}}
-			            {{else}}
-			              <input class="interval" type="text" placeholder="How often?"><button class="submit-interval">Set</button>
-			            {{/if}}</span>
+                    Contact in {{nextContactString nextContact}}
+                  {{else}}
+                    <input class="interval" type="text" placeholder="How often?"><button class="submit-interval">Set</button>
+                  {{/if}}</span>
         </a>
         <div class="profile profile-link">
-		>
-		</div>
+    >
+    </div>
     </li>
 </template>

@@ -1,0 +1,28 @@
+<template name="contacts">
+  <div id="contacts" class="contacts">
+
+    <div class="add-contact-wrapper">
+      <div class="right">+ Add a Contact</div>
+      <div class="add-contact">
+        <input class="name" type="text" placeholder="New Contact Name">
+        <input class="email" type="email" placeholder="Email">
+        <button class="submit">+</button>
+      </div>
+    </div>
+
+    <div class="search-contact">
+      <div id="search">
+        <input type="text" class="search" id="search-field" placeholder="Search Contacts...">
+      </div>
+    </div>
+    {{>contactList}}
+  </div>
+</template>
+
+<template name="contactList">
+  <ul class="list">
+    {{#each contacts}}
+      {{> eachContact}} 
+    {{/each}}   
+  </ul>
+</template>
