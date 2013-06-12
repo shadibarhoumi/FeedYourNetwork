@@ -52,27 +52,6 @@
   {{/if}}
 </template>
 
-<template name="contacts">
-  <div id="contacts" class="contacts">
-
-    <div class="add-contact-wrapper">
-      <div class="right">+ Add a Contact</div>
-      <div class="add-contact">
-        <input class="name" type="text" placeholder="New Contact Name">
-        <input class="email" type="email" placeholder="Email">
-        <button class="submit">+</button>
-      </div>
-    </div>
-
-    <div class="search-contact">
-      <div id="search">
-        <input type="text" class="search" id="search-field" placeholder="Search Contacts...">
-      </div>
-    </div>
-    {{>contactList}}
-  </div>
-</template>
-
 <template name="panel">
   {{#with data}}
     <div class="pane" id="contact">
@@ -103,22 +82,13 @@
             <li class="linked"><div class="icon">l</div></li>
           </ul>
           
-          {{>streamsTemp}}
+          {{>socialStream}}
           
         </div>
       </div>
     </div>
   {{/with}}
 </template>
-
-<template name="contactList">
-  <ul class="list">
-    {{#each contacts}}
-      {{> eachContact}} 
-    {{/each}}   
-  </ul>
-</template>
-
 
 <template name="notifications">
   <div class="pane" id="notifications">
@@ -150,14 +120,12 @@
             <li class="twitter"><div class="icon">t</div></li>
             <li class="linked"><div class="icon">l</div></li>
           </ul>
-          {{>streamsTemp}}
-
+          {{>socialStream}}
 
         </li>
         {{/each}}
       </ul>
     </li>
-
 
     {{#each future}}
     <li class="basic">
@@ -170,14 +138,14 @@
   </div>
 </template>
 
-<template name="streamsTemp">
+<template name="socialStream">
   <ul class="social">
     {{#each streams}}
-    {{>stream}}
+    {{>story}}
     {{/each}}
   </ul>
 </template>
 
-<template name="stream">
+<template name="story">
   <li class="event"><a href="{{url}}">{{relative}}: {{update}}</a></li>
 </template>
