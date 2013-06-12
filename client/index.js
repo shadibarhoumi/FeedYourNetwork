@@ -1,10 +1,3 @@
-/////////////////////////////////////////////////////// CLIENT /////////////////////////////////////////////////////
-
-if (Meteor.isClient) {
-
-  window.onLinkedInAuth = function() {
-    Session.set('linkedinAuth', true);
-  };
 
   Template.login.isLinkedinAuth = function() {
     return Session.get('linkedinAuth');
@@ -14,7 +7,6 @@ if (Meteor.isClient) {
     'click .loadContacts' : function(event) {
       //define call back to be run once facebook is ready
       var callback = function(fbFriendsList) {
-        // debugger;
         for (var i = 0; i < fbFriendsList.length; i++) {
           var obj = fbFriendsList[i];
           Contacts.insert({
@@ -162,5 +154,3 @@ var linkedInCallback = function(list) {
     },
     passwordSignupFields: 'USERNAME_AND_EMAIL'
   }); 
-
-}
